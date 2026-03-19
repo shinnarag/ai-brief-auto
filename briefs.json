@@ -5,24 +5,24 @@
     "filename": "brief_2026-03-19.html",
     "keywords": [
       {
-        "word": "AI",
+        "word": "AI영상생성",
         "score": 5
       },
       {
-        "word": "영상생성",
+        "word": "멀티모달파이프라인",
         "score": 4
       },
       {
-        "word": "음악AI",
+        "word": "Figma AI",
+        "score": 4
+      },
+      {
+        "word": "AI저작권",
         "score": 3
       },
       {
-        "word": "디자인",
-        "score": 2
-      },
-      {
-        "word": "마케팅",
-        "score": 1
+        "word": "콘텐츠오케스트레이션",
+        "score": 3
       }
     ]
   }
