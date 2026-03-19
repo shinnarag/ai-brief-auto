@@ -1,567 +1,112 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI 크리에이티브 위클리 브리프 — 2026.03.19</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&family=Noto+Sans+KR:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --ink: #0f0e0d;
-      --paper: #f5f0e8;
-      --accent: #c8392b;
-      --accent2: #1a5276;
-      --muted: #7a7265;
-      --rule: #d4c9b8;
-      --card: #fff9f2;
-      --tag-video: #1a5276;
-      --tag-music: #7d3c98;
-      --tag-design: #117a65;
-      --tag-content: #c8392b;
-    }
-
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background-color: var(--paper);
-      color: var(--ink);
-      font-family: 'Noto Sans KR', sans-serif;
-      font-size: 15px;
-      line-height: 1.7;
-      min-height: 100vh;
-    }
-
-    /* ── TOP STRIPE BAR ── */
-    .stripe-bar {
-      height: 10px;
-      background: repeating-linear-gradient(
-        90deg,
-        var(--accent) 0px,
-        var(--accent) 18px,
-        var(--ink) 18px,
-        var(--ink) 36px,
-        var(--paper) 36px,
-        var(--paper) 48px
-      );
-    }
-
-    /* ── MASTHEAD ── */
-    .masthead {
-      border-bottom: 3px double var(--ink);
-      padding: 28px 40px 20px;
-      text-align: center;
-      background: var(--paper);
-      position: relative;
-    }
-
-    .masthead-eyebrow {
-      font-family: 'Space Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.25em;
-      color: var(--muted);
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-
-    .masthead h1 {
-      font-family: 'Noto Serif KR', serif;
-      font-size: clamp(2rem, 5vw, 3.4rem);
-      font-weight: 900;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      color: var(--ink);
-    }
-
-    .masthead h1 span {
-      color: var(--accent);
-    }
-
-    .masthead-meta {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 24px;
-      margin-top: 14px;
-      flex-wrap: wrap;
-    }
-
-    .masthead-meta span {
-      font-family: 'Space Mono', monospace;
-      font-size: 10.5px;
-      color: var(--muted);
-      letter-spacing: 0.08em;
-    }
-
-    .masthead-meta .divider {
-      color: var(--rule);
-    }
-
-    .masthead-tagline {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 12.5px;
-      color: var(--muted);
-      font-style: italic;
-      margin-top: 6px;
-    }
-
-    /* ── LAYOUT ── */
-    .wrapper {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 0 24px 60px;
-    }
-
-    /* ── TABLE OF CONTENTS ── */
-    .toc {
-      border: 1px solid var(--rule);
-      background: var(--card);
-      padding: 18px 24px;
-      margin: 28px 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px 28px;
-      align-items: center;
-    }
-
-    .toc-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-right: 8px;
-    }
-
-    .toc-item {
-      font-family: 'Noto Sans KR', sans-serif;
-      font-size: 12.5px;
-      color: var(--accent2);
-      text-decoration: none;
-      border-bottom: 1px dotted var(--accent2);
-      transition: color 0.2s;
-    }
-
-    .toc-item:hover {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-    }
-
-    /* ── SECTION ── */
-    .section {
-      margin-bottom: 52px;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 20px;
-      padding-bottom: 12px;
-      border-bottom: 2px solid var(--ink);
-    }
-
-    .section-num {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      font-weight: 700;
-      color: #fff;
-      padding: 3px 8px;
-      letter-spacing: 0.12em;
-    }
-
-    .section-num.video   { background: var(--tag-video); }
-    .section-num.music   { background: var(--tag-music); }
-    .section-num.design  { background: var(--tag-design); }
-    .section-num.content { background: var(--tag-content); }
-
-    .section-title {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 1.55rem;
-      font-weight: 700;
-      color: var(--ink);
-    }
-
-    .section-badge {
-      font-family: 'Space Mono', monospace;
-      font-size: 9.5px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      padding: 3px 9px;
-      border-radius: 2px;
-      color: #fff;
-      margin-left: auto;
-    }
-
-    .section-badge.video   { background: var(--tag-video); }
-    .section-badge.music   { background: var(--tag-music); }
-    .section-badge.design  { background: var(--tag-design); }
-    .section-badge.content { background: var(--tag-content); }
-
-    /* ── CARD GRID ── */
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 18px;
-    }
-
-    /* ── CARD ── */
-    .card {
-      background: var(--card);
-      border: 1px solid var(--rule);
-      border-left: 4px solid var(--rule);
-      padding: 20px 20px 16px;
-      transition: border-left-color 0.22s ease, box-shadow 0.22s ease;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .card:hover {
-      border-left-color: var(--accent);
-      box-shadow: 3px 4px 18px rgba(200, 57, 43, 0.09);
-    }
-
-    .card-meta {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .card-source {
-      font-family: 'Space Mono', monospace;
-      font-size: 9.5px;
-      color: var(--muted);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .card-date {
-      font-family: 'Space Mono', monospace;
-      font-size: 9.5px;
-      color: var(--muted);
-    }
-
-    .card-title {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 1.02rem;
-      font-weight: 700;
-      line-height: 1.42;
-      color: var(--ink);
-    }
-
-    .card-title a {
-      color: inherit;
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.18s;
-    }
-
-    .card-title a:hover {
-      border-bottom-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .card-summary {
-      font-family: 'Noto Sans KR', sans-serif;
-      font-size: 13.5px;
-      color: var(--ink);
-      line-height: 1.75;
-    }
-
-    /* ── INSIGHT BOX ── */
-    .insight {
-      border-left: 3px solid var(--accent);
-      background: #fdf4f2;
-      padding: 10px 14px;
-      font-size: 12.5px;
-      line-height: 1.68;
-      color: #3d1f1a;
-    }
-
-    .insight strong {
-      font-family: 'Noto Sans KR', sans-serif;
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--accent);
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .card-link {
-      font-family: 'Space Mono', monospace;
-      font-size: 10px;
-      color: var(--accent2);
-      text-decoration: none;
-      letter-spacing: 0.05em;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      border-bottom: 1px dotted var(--accent2);
-      margin-top: auto;
-      align-self: flex-start;
-      transition: color 0.18s;
-    }
-
-    .card-link:hover {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-    }
-
-    /* ── EMPTY STATE ── */
-    .empty {
-      font-family: 'Space Mono', monospace;
-      font-size: 12px;
-      color: var(--muted);
-      padding: 24px;
-      border: 1px dashed var(--rule);
-      text-align: center;
-      letter-spacing: 0.1em;
-    }
-
-    /* ── RULE DIVIDER ── */
-    .rule {
-      border: none;
-      border-top: 1px solid var(--rule);
-      margin: 36px 0;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 3px double var(--ink);
-      padding: 22px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      background: var(--paper);
-    }
-
-    footer p {
-      font-family: 'Space Mono', monospace;
-      font-size: 10px;
-      color: var(--muted);
-      letter-spacing: 0.08em;
-    }
-
-    .footer-brand {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--ink);
-    }
-
-    @media (max-width: 640px) {
-      .masthead { padding: 20px 18px 16px; }
-      .wrapper { padding: 0 14px 40px; }
-      .card-grid { grid-template-columns: 1fr; }
-      footer { flex-direction: column; text-align: center; }
-      .section-header { flex-wrap: wrap; }
-      .section-badge { margin-left: 0; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AI 크리에이티브 브리프 — 아카이브</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700&family=Space+Mono:wght@400;700&family=Noto+Serif+KR:wght@400;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--surface:#111;--surface2:#1a1a1a;--border:#2a2a2a;
+  --text:#e8e4dc;--muted:#6b6860;--accent:#e8c547;--accent2:#4a9eff;
+  --tag-video:#4a9eff;--tag-music:#b47dff;--tag-design:#4ecf8a;--tag-content:#ff6b6b;
+}
+html{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:15px;line-height:1.7}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--accent);color:#000}
+nav{
+  position:sticky;top:0;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:.9rem 2rem;
+  background:rgba(10,10,10,.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.12em;color:var(--accent)}
+.nav-links{display:flex;gap:1.5rem;font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.1em;color:var(--muted)}
+.nav-links a:hover{color:var(--text)}
+.hero{padding:5rem 2rem 3rem;border-bottom:1px solid var(--border);max-width:1100px;margin:0 auto}
+.hero-eyebrow{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,10vw,7rem);letter-spacing:.04em;line-height:.95;color:var(--text)}
+.hero-title span{color:var(--accent)}
+.hero-meta{display:flex;gap:2rem;margin-top:1.5rem;font-family:'Space Mono',monospace;font-size:.68rem;color:var(--muted);letter-spacing:.06em}
+.section-head{display:flex;align-items:center;gap:1rem;padding:.5rem 0;border-top:1px solid var(--border);margin-bottom:1.2rem}
+.section-num{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:.14em}
+.section-tag{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:.22rem .65rem;border-radius:2px;color:#000;font-weight:700}
+.tag-video{background:var(--tag-video)}.tag-music{background:var(--tag-music)}.tag-design{background:var(--tag-design)}.tag-content{background:var(--tag-content)}
+.section-title{font-family:'Noto Serif KR',serif;font-size:1.15rem;font-weight:700;color:var(--text)}
+.item{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--border);border-radius:3px;padding:1.2rem 1.5rem;margin-bottom:.9rem;transition:border-color .2s,background .2s}
+.item:hover{border-left-color:var(--accent);background:var(--surface2)}
+.item-meta{display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:center;margin-bottom:.5rem}
+.item-title{font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;line-height:1.4;color:var(--text)}
+.item-date{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);background:var(--surface2);border:1px solid var(--border);padding:.12rem .4rem;border-radius:2px}
+.item-source{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--accent2);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.item-summary{font-size:.88rem;line-height:1.8;color:#c0bbb2;margin:.6rem 0}
+.item-implication{border-left:3px solid var(--accent);padding:.55rem 1rem;margin:.7rem 0 .4rem;background:rgba(232,197,71,.05);font-size:.84rem;line-height:1.7;color:#d4cfc7}
+.item-implication strong{display:block;margin-bottom:.2rem;font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.item-link{display:inline-block;margin-top:.4rem;font-family:'Space Mono',monospace;font-size:.63rem;color:var(--accent2);border-bottom:1px dashed var(--accent2);word-break:break-all}
+.item-link:hover{color:var(--accent);border-color:var(--accent)}
+.keyword-cloud{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem 1.2rem;padding:1.8rem 0}
+.kw{font-family:'Bebas Neue',sans-serif;letter-spacing:.06em;transition:color .2s;cursor:default}
+.kw:hover{color:var(--accent)}
+.kw-1{font-size:2.4rem;color:var(--text)}.kw-2{font-size:1.8rem;color:#bbb5ac}.kw-3{font-size:1.35rem;color:#8a857e}.kw-4{font-size:1.05rem;color:#6b6860}.kw-5{font-size:.85rem;color:#504e4a}
+.archive-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:var(--border)}
+.archive-card{background:var(--bg);padding:1.8rem;transition:background .15s}
+.archive-card:hover{background:var(--surface)}
+.archive-card-date{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--accent);letter-spacing:.1em;margin-bottom:.5rem}
+.archive-card-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.06em;color:var(--text);margin-bottom:.8rem;line-height:1.1}
+.archive-card-kws{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:1rem}
+.archive-card-kw{font-family:'Space Mono',monospace;font-size:.58rem;color:var(--muted);border:1px solid var(--border);padding:.1rem .4rem;border-radius:2px}
+.archive-card-link{font-family:'Space Mono',monospace;font-size:.63rem;color:var(--accent2);border-bottom:1px dashed var(--accent2)}
+footer{text-align:center;padding:3rem 1rem;border-top:1px solid var(--border);margin-top:4rem;font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);letter-spacing:.08em;line-height:2.2}
+hr.div{border:none;border-top:1px solid var(--border);margin:2.5rem 0 0}
+.container{max-width:1100px;margin:0 auto;padding:0 2rem}
+.section{margin-top:2.8rem}
+.empty{color:var(--muted);font-size:.85rem;padding:1.2rem;border:1px dashed var(--border);text-align:center;font-family:'Space Mono',monospace}
+@media(max-width:600px){.hero{padding:3rem 1rem 2rem}.container{padding:0 1rem}.hero-meta{flex-wrap:wrap;gap:.6rem}}
+</style>
 </head>
 <body>
-
-<!-- 빨간 줄무늬 상단바 -->
-<div class="stripe-bar"></div>
-
-<!-- MASTHEAD -->
-<header class="masthead">
-  <p class="masthead-eyebrow">AI Creative Industry Research Brief</p>
-  <h1>AI 크리에이티브 <span>위클리 브리프</span></h1>
-  <p class="masthead-tagline">Video · Music · Design · Content Marketing — 크리에이티브 산업의 AI 흐름을 읽다</p>
-  <div class="masthead-meta">
-    <span>VOL. 2026</span>
-    <span class="divider">|</span>
-    <span>목요일판 · 2026.03.19</span>
-    <span class="divider">|</span>
-    <span>수집기간: 2026-03-16 ~ 2026-03-19</span>
-    <span class="divider">|</span>
-    <span>섹션 4 · 아이템 20</span>
+<nav>
+  <span class="nav-logo">AI BRIEF</span>
+  <div class="nav-links"><a href="brief_2026-03-19.html">최신 브리프</a><span>아카이브</span></div>
+</nav>
+<div class="hero">
+  <p class="hero-eyebrow">AI CREATIVE BRIEF · ARCHIVE</p>
+  <h1 class="hero-title">AI<br><span>크리에이티브</span><br>브리프</h1>
+  <div class="hero-meta">
+    <span>매주 월·목 자동 발행</span>
+    <span>Video / Music / Design / Content AI</span>
+    <span>총 1개 브리프</span>
   </div>
-</header>
-
-<div class="wrapper">
-
-  <!-- TOC -->
-  <nav class="toc">
-    <span class="toc-label">이번 호 목차</span>
-    <a href="#video-ai" class="toc-item">01 Video AI</a>
-    <a href="#music-ai" class="toc-item">02 Music AI</a>
-    <a href="#design-ai" class="toc-item">03 Design AI</a>
-    <a href="#content-ai" class="toc-item">04 AI 콘텐츠·마케팅 이슈</a>
-  </nav>
-
-  <!-- ══════════════════════════════════════
-       SECTION 01 · VIDEO AI
-  ══════════════════════════════════════ -->
-  <section class="section" id="video-ai">
-    <div class="section-header">
-      <span class="section-num video">01</span>
-      <h2 class="section-title">Video AI</h2>
-      <span class="section-badge video">VIDEO AI</span>
+</div>
+<div class="container">
+  <div class="section">
+    <div class="section-head">
+      <span class="section-num">이번 호 /</span>
+      <span class="section-tag tag-video">KEYWORDS</span>
+      <span class="section-title">주요 키워드 — 2026-03-19</span>
     </div>
-
-    <div class="card-grid">
-
-      <!-- CARD 1 -->
-      <article class="card">
-        <div class="card-meta">
-          <span class="card-source">ALM Corp · Blog</span>
-          <span class="card-date">2026.03.16</span>
-        </div>
-        <h3 class="card-title">
-          <a href="https://almcorp.com/blog/ai-video-generators/" target="_blank" rel="noopener">
-            Google Veo 3.1, 2026년 AI 비디오 최강자로 부상 — 10대 툴 종합 비교
-          </a>
-        </h3>
-        <p class="card-summary">
-          ALM Corp이 2026년 최고의 AI 영상 생성 도구 10종을 실사용 기준으로 비교한 결과, Google Veo 3.1이 품질·일관성 부문 종합 1위를 차지했다. 멀티샷 시퀀스, 캐릭터 지속성, 물리 기반 렌더링에서 경쟁 모델을 앞서며 Zapier 업데이트 가이드에서도 1위를 유지한다. 다만 '시간적 일관성(temporal consistency)'—복수 클립에서 동일 인물·오브젝트를 유지하는 것—은 여전히 전 업계의 공통 난제로 꼽힌다.
-        </p>
-        <div class="insight">
-          <strong>실무 시사점</strong>
-          브랜드 광고나 시리즈 콘텐츠처럼 캐릭터 일관성이 중요한 프로젝트라면 Veo 3.1을 우선 테스트할 것. 단, 모든 툴에서 멀티 클립 편집 단계의 수작업 검수 프로세스는 필수다.
-        </div>
-        <a href="https://almcorp.com/blog/ai-video-generators/" class="card-link" target="_blank" rel="noopener">→ 원문 읽기</a>
-      </article>
-
-      <!-- CARD 2 -->
-      <article class="card">
-        <div class="card-meta">
-          <span class="card-source">Medium · Sanjeev Patel</span>
-          <span class="card-date">2026.03.14</span>
-        </div>
-        <h3 class="card-title">
-          <a href="https://medium.com/@sanjeevpatel3007/12-ai-models-in-march-2026-the-week-that-changed-ai-bb21c6624036" target="_blank" rel="noopener">
-            Lightricks LTX 2.3 공개 — 4K 60fps·22B 파라미터 오픈소스 비디오 모델
-          </a>
-        </h3>
-        <p class="card-summary">
-          Lightricks가 3월 첫째 주 공개한 LTX 2.3은 220억 파라미터 Diffusion Transformer 기반으로, 단일 포워드 패스에서 비디오와 오디오를 동시 생성한다. 4K·50fps·최대 20초 지원에 세로 모드(1080×1920) 네이티브 출력이 가능하고, 증류(distilled) 변형은 단 8단계 디노이징으로 초고속 생성을 구현한다. 재구축된 VAE로 질감 디테일이 크게 향상됐으며 오픈소스로 공개돼 상업적 활용 장벽이 낮다.
-        </p>
-        <div class="insight">
-          <strong>실무 시사점</strong>
-          자체 서버나 클라우드에 모델을 온프레미스 배포하려는 영상 스튜디오·에이전시라면 LTX 2.3이 현실적인 선택지. 4K 세로 출력 기능은 쇼츠·릴스용 광고 제작 파이프라인에 즉시 적용 가능하다.
-        </div>
-        <a href="https://medium.com/@sanjeevpatel3007/12-ai-models-in-march-2026-the-week-that-changed-ai-bb21c6624036" class="card-link" target="_blank" rel="noopener">→ 원문 읽기</a>
-      </article>
-
-      <!-- CARD 3 -->
-      <article class="card">
-        <div class="card-meta">
-          <span class="card-source">Magic Hour · Blog</span>
-          <span class="card-date">2026.03.08</span>
-        </div>
-        <h3 class="card-title">
-          <a href="https://magichour.ai/blog/ai-video-model-release-tracker-2026" target="_blank" rel="noopener">
-            2026 AI 비디오 트렌드: 단일 모델에서 '풀 크리에이션 파이프라인'으로 전환
-          </a>
-        </h3>
-        <p class="card-summary">
-          Magic Hour의 AI 비디오 모델 릴리스 트래커에 따르면 2026년의 가장 큰 변화는 개별 모델 성능 향상이 아니라 '전체 제작 파이프라인'으로의 통합이다. Seedance 2.0은 기존 영상 AI의 취약점이던 모션 안정성과 씬 구성을 대폭 개선해 시네마틱 구조에 초점을 맞춘다. 시장은 소수의 플랫폼으로 급속히 집중되는 중이며, 품질과 기능성에서 앞선 도구들이 격차를 벌리고 있다.
-        </p>
-        <div class="insight">
-          <strong>실무 시사점</strong>
-          복수의 단일 AI 툴을 조합하던 워크플로우를 재검토할 시점. 스크립트→스토리보드→영상→오디오를 단일 플랫폼에서 처리하는 파이프라인 도입 가능성을 Q2 실험 일정에 포함시킬 것.
-        </div>
-        <a href="https://magichour.ai/blog/ai-video-model-release-tracker-2026" class="card-link" target="_blank" rel="noopener">→ 원문 읽기</a>
-      </article>
-
-      <!-- CARD 4 -->
-      <article class="card">
-        <div class="card-meta">
-          <span class="card-source">European Business Magazine</span>
-          <span class="card-date">2026.01.25</span>
-        </div>
-        <h3 class="card-title">
-          <a href="https://europeanbusinessmagazine.com/business/12-best-ai-video-generator-tools-of-2026/" target="_blank" rel="noopener">
-            비즈니스용 HeyGen·Synthesia, 시네마틱용 Kling 3.0·Sora 2 — 용도별 최적 도구 가이드
-          </a>
-        </h3>
-        <p class="card-summary">
-          2026년 AI 영상 생성 시장은 4K 해상도·네이티브 오디오·립싱크·멀티샷 시퀀스를 지원하는 수준으로 성숙했으며, 요금은 생성 영상 1초당 $0.05~$0.40 범위에 걸쳐 있다. 기업 교육·아바타 콘텐츠는 HeyGen·Synthesia, 시네마틱 품질은 Kling 3.0·Sora 2가 각각 최고 ROI를 보인다. 시장 집중화가 빠르게 진행되며 Runway도 상위권을 유지 중이다.
-        </p>
-        <div class="insight">
-          <strong>실무 시사점</strong>
-          사내 교육 영상·제품 데모라면 HeyGen/Synthesia의 아바타 기능으로 제작비를 80% 이상 절감할 수 있다. 브랜드 필름처럼 시각 품질이 핵심이라면 Kling 3.0·Sora 2로 파일럿 제작 후 비교해볼 것.
-        </div>
-        <a href="https://europeanbusinessmagazine.com/business/12-best-ai-video-generator-tools-of-2026/" class="card-link" target="_blank" rel="noopener">→ 원문 읽기</a>
-      </article>
-
-      <!-- CARD 5 -->
-      <article class="card">
-        <div class="card-meta">
-          <span class="card-source">Barchart · News</span>
-          <span class="card-date">2026.01.24</span>
-        </div>
-        <h3 class="card-title">
-          <a href="https://www.barchart.com/story/news/37206881/best-ai-video-to-video-generator-for-2026-how-to-choose-the-right-tool" target="_blank" rel="noopener">
-            AI 비디오-to-비디오 전환 툴 비교: 스타일 트랜스퍼부터 소셜 콘텐츠 고속 변환까지
-          </a>
-        </h3>
-        <p class="card-summary">
-          2026년 AI 비디오-to-비디오 도구는 스타일 트랜스퍼·콘텐츠 재목적화·쇼츠/릴스 고속 반복·개념 시각화 등 네 가지 주요 워크플로우를 중심으로 재편됐다. 소셜 콘텐츠 크리에이터에게는 빠른 변환 속도, 광고 제작팀에게는 시네마틱 물리 엔진, 실험적 크리에이터에게는 창의적 컨트롤이 핵심 선택 기준으로 제시된다. 각 툴의 최적화 방향이 명확히 갈리므로 사용 목적 정의가 먼저다.
-        </p>
-        <div class="insight">
-          <strong>실무 시사점</strong>
-          기존 영상 자산(광고 소재, 유튜브 영상)의 소셜 단편 변환에 AI video-to-video를 도입하면 에디터 공수를 대폭 줄일 수 있다. 툴 도입 전 '무엇을 위한 변환인가'를 먼저 정의하고 파일럿 비교 테스트를 진행할 것.
-        </div>
-        <a href="https://www.barchart.com/story/news/37206881/best-ai-video-to-video-generator-for-2026-how-to-choose-the-right-tool" class="card-link" target="_blank" rel="noopener">→ 원문 읽기</a>
-      </article>
-
+    <div class="keyword-cloud"><span class="kw kw-1">AI</span><span class="kw kw-2">영상생성</span><span class="kw kw-3">음악AI</span><span class="kw kw-4">디자인</span><span class="kw kw-5">마케팅</span></div>
+    <div style="margin-top:1.2rem">
+      <a href="brief_2026-03-19.html" class="item-link" style="font-size:.75rem">→ 최신 브리프 전체 보기</a>
     </div>
-  </section>
-
-  <hr class="rule">
-
-  <!-- ══════════════════════════════════════
-       SECTION 02 · MUSIC AI
-  ══════════════════════════════════════ -->
-  <section class="section" id="music-ai">
-    <div class="section-header">
-      <span class="section-num music">02</span>
-      <h2 class="section-title">Music AI</h2>
-      <span class="section-badge music">MUSIC AI</span>
+  </div>
+  <hr class="div">
+  <div class="section">
+    <div class="section-head">
+      <span class="section-num">전체 /</span>
+      <span class="section-tag tag-content">ARCHIVE</span>
+      <span class="section-title">브리프 아카이브</span>
     </div>
-
-    <div class="card-grid">
-
-      <!-- CARD 1 -->
-      <article class="card">
-        <div class="card-meta">
-          <span class="card-source">Soundverse · Blog</span>
-          <span class="card-date">2026.03.17</span>
-        </div>
-        <h3 class="card-title">
-          <a href="https://www.soundverse.ai/blog/article/ai-music-and-the-next-era-of-creation-0849" target="_blank" rel="noopener">
-            AI 생성 음악이 차트에 오르다 — 2026년 음악 창작의 새 시대
-          </a>
-        </h3>
-        <p class="card-summary">
-          2024년만 해도 실험적 수준이었던 AI 생성 음악이 2026년에는 실제 차트 진입 사례까지 나오며 주류로 진입했다. 텍스트-투-뮤직 인터페이스로 "서정적 피아노 발라드"처럼 서술적 프롬프트를 입력하면 인증된 편곡이 생성되고, 다중 트랙에 걸쳐 일관된 음향 서명(sonic signature)을 유지하는 스타일 연속성 기능이 브랜딩과 게임 사운드트랙에 활용되고 있다. AI 뮤지션이 아티스트 '디지털 DNA'를 기반으로 고유한 음악적 정체성을 갖추는 시대가 열렸다.
-        </p>
-        <div class="insight">
-          <strong>실무 시사점</strong>
-          광고·게임·브랜드 영상용 배경음악을 반복 의뢰하는 팀이라면 스타일 연속성 기능을 갖춘 AI 음악 플랫폼 도입으로 라이선스 비용과 제작 리드타임을 동시에 단축할 수 있다.
-        </div>
-        <a href="https://www.soundverse.ai/blog/article/ai-music-and-the-next-era-of-creation-0849" class="card-link" target="_blank" rel="noopener">→ 원문 읽기</a>
-      </article>
-
-      <!-- CARD 2 -->
-      <article class="card">
-        <div class="card-meta">
-          <span class="card-source">Billboard · Lists</span>
-          <span class="card-date">2026.01.30</span>
-        </div>
-        <h3 class="card-title">
-          <a href="https://www.billboard.com/lists/top-ai-music-companies-2026-future-music/" target="_blank" rel="noopener">
-            SoundPatrol: U
+    <div class="archive-grid"><div class="archive-card"><div class="archive-card-date">2026-03-19 · 목요일 판</div><div class="archive-card-title">AI 크리에이티브<br>브리프</div><div class="archive-card-kws"><span class="archive-card-kw">AI</span><span class="archive-card-kw">영상생성</span><span class="archive-card-kw">음악AI</span><span class="archive-card-kw">디자인</span><span class="archive-card-kw">마케팅</span></div><a class="archive-card-link" href="brief_2026-03-19.html">브리프 보기 →</a></div></div>
+  </div>
+</div>
+<footer>
+  AI CREATIVE BRIEF · 매주 월·목 자동 발행<br>
+  GitHub Actions + Claude API + Tavily<br>
+  <span style="font-size:.55rem;opacity:.5">Generated 2026-03-19</span>
+</footer>
+</body>
+</html>
