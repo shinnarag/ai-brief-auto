@@ -1,8 +1,8 @@
 """
-AI Creative Weekly Brief v4
-- 라이트 기본 / 다크모드 토글
-- 메인 컬러 블루 계열
-- 가독성 개선 (볼드, 대비 강화)
+AI Creative Weekly Brief v5
+- 주요 AI 모델 업데이트 중심 (리서치/통계 제외)
+- 급상승 콘텐츠 섹션 추가 (YouTube, Instagram, Threads)
+- 라이트 기본 / 다크모드 토글 / 블루 계열
 """
 
 import os, json, re
@@ -21,15 +21,37 @@ today_str  = today.strftime("%Y-%m-%d")
 print(f"[INFO] {edition} 판 | 수집: {since_date} ~ {today_str}")
 
 month_str = today.strftime("%B %Y")
+date_str  = today.strftime("%Y %m %d")
+
+# ── 검색 쿼리: 모델 업데이트 + 급상승 콘텐츠 중심 ────────
 QUERIES = {
-    "video":   [f"AI video generation model release update {month_str}",
-                f"text to video AI tool news {month_str}"],
-    "music":   [f"AI music generation tool model release {month_str}",
-                f"generative AI music production update {month_str}"],
-    "design":  [f"AI design tool Adobe Figma Canva release {month_str}",
-                f"generative AI image design model update {month_str}"],
-    "content": [f"AI content marketing strategy issue {month_str}",
-                f"AI generated content copyright brand regulation {month_str}"],
+    # 영상 생성 모델 릴리즈/업데이트에 집중
+    "video": [
+        f"video AI model launch release {month_str} Sora Runway Kling Pika Veo",
+        f"text to video AI model update new version {month_str}",
+    ],
+    # 음악 생성 모델 릴리즈/업데이트
+    "music": [
+        f"AI music generation model release update {month_str} Suno Udio",
+        f"music AI tool new version launch {month_str}",
+    ],
+    # 디자인/이미지 모델 릴리즈/업데이트
+    "design": [
+        f"AI image design model release update {month_str} Midjourney Firefly DALL-E Stable Diffusion",
+        f"design AI tool new feature launch {month_str} Adobe Figma Canva",
+    ],
+    # AI 콘텐츠/마케팅 이슈
+    "content": [
+        f"AI content marketing brand strategy {month_str}",
+        f"AI generated content copyright brand safety regulation {month_str}",
+    ],
+    # 급상승 콘텐츠 트렌드 — 플랫폼별
+    "trending": [
+        f"YouTube trending viral content creators {month_str}",
+        f"Instagram Threads trending viral content {month_str}",
+        f"viral social media content trend {date_str}",
+        f"trending short form video content {month_str}",
+    ],
 }
 
 def search(queries):
@@ -55,31 +77,52 @@ for key, qs in QUERIES.items():
     search_data[key] = search(qs)
     print(f"  v {key}: {len(search_data[key])}건")
 
+# ── Claude 프롬프트 ────────────────────────────────────────
 SYSTEM = """당신은 AI 크리에이티브 산업 전문 리서처입니다.
 반드시 순수 JSON만 출력하세요. 마크다운 코드블록, 설명, 주석 절대 금지.
+
 JSON 스키마:
 {
   "keywords": [{"word": "string", "score": 1-5}],
   "sections": {
-    "video":   [{"title":"","date":"YYYY-MM-DD","source":"","summary":"","implication":"","url":""}],
-    "music":   [...],
-    "design":  [...],
-    "content": [...]
+    "video":    [{"title":"","date":"YYYY-MM-DD","source":"","summary":"","implication":"","url":""}],
+    "music":    [...],
+    "design":   [...],
+    "content":  [...],
+    "trending": [{"title":"","date":"YYYY-MM-DD","platform":"","summary":"","implication":"","url":""}]
   }
 }
-keywords는 정확히 5개. sections 각 배열은 0~5개 아이템."""
+keywords 정확히 5개. 각 섹션 배열 0~5개 아이템."""
 
-USER = f"""검색 결과를 분석해 AI 크리에이티브 위클리 브리프 데이터를 JSON으로 출력하세요.
+USER = f"""검색 결과를 분석해 AI 크리에이티브 위클리 브리프 JSON을 출력하세요.
 
 오늘: {today_str} / {edition} 판 / 수집기간: {since_date}~{today_str}
 
-규칙:
-- 수집 기간({since_date}~{today_str}) 내 발행된 이슈만. 과거 이슈 절대 금지
-- 최신 AI 도구/모델 업데이트 우선 (영상 생성, 디자인 AI, 음악 AI 등)
-- 콘텐츠/마케팅 팀 실무자 관점
-- title(한국어)/date(YYYY-MM-DD)/source/summary(2~3문장 한국어)/implication(실무시사점)/url
-- 이슈 없는 섹션은 빈 배열 []
-- keywords: 핵심 키워드 5개, score 5=가장 중요
+## 섹션별 작성 기준
+
+### video / music / design (AI 모델 업데이트)
+- 반드시 수집 기간({since_date}~{today_str}) 내 발행된 내용만 포함
+- **포함**: 모델 출시, 버전 업데이트, 새 기능 릴리즈, 공식 발표
+- **제외**: 리서치 논문, 통계 보고서, 시장 분석, 전망 기사
+- 해당 기간 내 모델 업데이트가 없으면 빈 배열 [] 반환
+
+### content (AI 콘텐츠·마케팅 이슈)
+- 브랜드·마케팅 실무자에게 직결되는 AI 활용 이슈
+- 저작권, 규제, 캠페인 사례, 플랫폼 정책 변화
+- 리서치/통계 단순 인용 기사 제외
+
+### trending (급상승 콘텐츠)
+- YouTube, Instagram, Threads, TikTok 등에서 현재 급상승 중인 콘텐츠 트렌드
+- 특정 포맷, 챌린지, 크리에이터 트렌드, 바이럴 소재 등
+- platform 필드에 플랫폼명 기재 (예: YouTube, Instagram, Threads)
+- 마케터가 캠페인에 활용할 수 있는 인사이트 중심
+
+## 공통 규칙
+- title: 한국어
+- summary: 2~3문장 한국어, 핵심 사실 위주
+- implication: 콘텐츠/마케팅 팀 실무자를 위한 시사점 1~2문장
+- 이슈 없으면 빈 배열 []
+- keywords: 이번 브리프 전체 핵심 키워드 5개, score 5=가장 중요
 
 검색결과:
 {json.dumps(search_data, ensure_ascii=False)}
@@ -108,320 +151,138 @@ print(f"[INFO] 키워드: {[k['word'] for k in keywords]}")
 for k, v in sections.items():
     print(f"  v {k}: {len(v)}건")
 
-# ── CSS: 라이트 기본 + 다크모드 토글 + 블루 계열 ──────────
+# ── CSS ───────────────────────────────────────────────────
 CSS = """
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&family=Noto+Serif+KR:wght@400;700&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
-
-/* ── 라이트 모드 (기본) ── */
 :root{
-  --bg:#f8f9fc;
-  --surface:#ffffff;
-  --surface2:#f0f3f8;
-  --border:#dde3ee;
-  --text:#0f1623;
-  --text-sub:#374151;
-  --muted:#6b7280;
-  --accent:#1d4ed8;
-  --accent-light:#eff6ff;
-  --accent2:#0ea5e9;
-  --video:#2563eb;
-  --music:#7c3aed;
-  --design:#059669;
-  --content:#dc2626;
-  --nav-bg:rgba(248,249,252,0.94);
-  --imp-bg:#eff6ff;
-  --imp-border:#1d4ed8;
+  --bg:#f8f9fc;--surface:#ffffff;--surface2:#f0f3f8;--border:#dde3ee;
+  --text:#0f1623;--text-sub:#374151;--muted:#6b7280;
+  --accent:#1d4ed8;--accent-light:#eff6ff;--accent2:#0ea5e9;
+  --video:#2563eb;--music:#7c3aed;--design:#059669;--content:#dc2626;--trending:#d97706;
+  --nav-bg:rgba(248,249,252,0.94);--imp-bg:#eff6ff;--imp-border:#1d4ed8;
   --kw1:#0f1623;--kw2:#1e3a6e;--kw3:#2563eb;--kw4:#6b7280;--kw5:#9ca3af;
 }
-
-/* ── 다크 모드 ── */
 [data-theme="dark"]{
-  --bg:#080d16;
-  --surface:#0f1623;
-  --surface2:#161f30;
-  --border:#1e2d45;
-  --text:#e8edf5;
-  --text-sub:#b8c4d4;
-  --muted:#5a7090;
-  --accent:#3b82f6;
-  --accent-light:#0f1e35;
-  --accent2:#38bdf8;
-  --video:#3b82f6;
-  --music:#a78bfa;
-  --design:#34d399;
-  --content:#f87171;
-  --nav-bg:rgba(8,13,22,0.94);
-  --imp-bg:#0f1e35;
-  --imp-border:#3b82f6;
+  --bg:#080d16;--surface:#0f1623;--surface2:#161f30;--border:#1e2d45;
+  --text:#e8edf5;--text-sub:#b8c4d4;--muted:#5a7090;
+  --accent:#3b82f6;--accent-light:#0f1e35;--accent2:#38bdf8;
+  --video:#3b82f6;--music:#a78bfa;--design:#34d399;--content:#f87171;--trending:#fbbf24;
+  --nav-bg:rgba(8,13,22,0.94);--imp-bg:#0f1e35;--imp-border:#3b82f6;
   --kw1:#e8edf5;--kw2:#93c5fd;--kw3:#3b82f6;--kw4:#5a7090;--kw5:#374151;
 }
-
 html{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:15px;line-height:1.75;transition:background .25s,color .25s}
 a{color:inherit;text-decoration:none}
 ::selection{background:var(--accent);color:#fff}
-
-/* NAV */
-nav{
-  position:sticky;top:0;z-index:100;
-  display:flex;justify-content:space-between;align-items:center;
-  padding:.85rem 2rem;
-  background:var(--nav-bg);
-  backdrop-filter:blur(14px);
-  border-bottom:1.5px solid var(--border);
-  transition:background .25s,border-color .25s;
-}
-.nav-logo{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:1.45rem;letter-spacing:.14em;
-  color:var(--accent);
-}
+nav{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:.85rem 2rem;background:var(--nav-bg);backdrop-filter:blur(14px);border-bottom:1.5px solid var(--border);transition:background .25s,border-color .25s}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.45rem;letter-spacing:.14em;color:var(--accent)}
 .nav-right{display:flex;align-items:center;gap:1.6rem}
 .nav-links{display:flex;gap:1.4rem;font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
 .nav-links a:hover{color:var(--text)}
-
-/* 다크모드 토글 */
-.theme-toggle{
-  display:flex;align-items:center;gap:.5rem;
-  font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.06em;
-  color:var(--muted);cursor:pointer;border:none;background:none;padding:0;
-}
-.toggle-track{
-  width:36px;height:20px;
-  background:var(--border);
-  border-radius:10px;
-  position:relative;
-  transition:background .25s;
-  border:1.5px solid var(--border);
-}
+.theme-toggle{display:flex;align-items:center;gap:.5rem;font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.06em;color:var(--muted);cursor:pointer;border:none;background:none;padding:0}
+.toggle-track{width:36px;height:20px;background:var(--border);border-radius:10px;position:relative;transition:background .25s;border:1.5px solid var(--border)}
 [data-theme="dark"] .toggle-track{background:var(--accent)}
-.toggle-thumb{
-  position:absolute;top:2px;left:2px;
-  width:14px;height:14px;
-  background:#fff;border-radius:50%;
-  transition:transform .2s;
-  box-shadow:0 1px 3px rgba(0,0,0,.2);
-}
+.toggle-thumb{position:absolute;top:2px;left:2px;width:14px;height:14px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
 [data-theme="dark"] .toggle-thumb{transform:translateX(16px)}
-.toggle-icon{font-size:13px}
-
-/* HERO */
-.hero{
-  padding:5rem 2rem 3.5rem;
-  border-bottom:1.5px solid var(--border);
-  max-width:1100px;margin:0 auto;
-}
-.hero-eyebrow{
-  font-family:'Space Mono',monospace;font-size:.68rem;
-  letter-spacing:.2em;text-transform:uppercase;
-  color:var(--accent);font-weight:700;margin-bottom:1.1rem;
-}
-.hero-title{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(3.8rem,10vw,7.5rem);
-  letter-spacing:.04em;line-height:.92;color:var(--text);
-}
+.hero{padding:5rem 2rem 3.5rem;border-bottom:1.5px solid var(--border);max-width:1100px;margin:0 auto}
+.hero-eyebrow{font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:1.1rem}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.8rem,10vw,7.5rem);letter-spacing:.04em;line-height:.92;color:var(--text)}
 .hero-title span{color:var(--accent)}
-.hero-meta{
-  display:flex;flex-wrap:wrap;gap:1.4rem;margin-top:1.8rem;
-  font-family:'Space Mono',monospace;font-size:.7rem;
-  color:var(--muted);letter-spacing:.05em;font-weight:700;
-}
+.hero-meta{display:flex;flex-wrap:wrap;gap:1.4rem;margin-top:1.8rem;font-family:'Space Mono',monospace;font-size:.7rem;color:var(--muted);letter-spacing:.05em;font-weight:700}
 .hero-meta span::before{content:'— ';opacity:.4}
-
-/* LAYOUT */
 .container{max-width:1100px;margin:0 auto;padding:0 2rem}
 .section{margin-top:3rem}
-
-/* SECTION HEAD */
-.section-head{
-  display:flex;align-items:center;gap:1rem;
-  padding:.6rem 0;
-  border-top:2px solid var(--text);
-  margin-bottom:1.4rem;
-}
+.section-head{display:flex;align-items:center;gap:1rem;padding:.6rem 0;border-top:2px solid var(--text);margin-bottom:1.4rem}
 .section-num{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);letter-spacing:.14em;font-weight:700}
-.section-tag{
-  font-family:'Space Mono',monospace;font-size:.62rem;
-  letter-spacing:.1em;text-transform:uppercase;
-  padding:.25rem .7rem;border-radius:3px;
-  color:#fff;font-weight:700;
-}
-.t-video{background:var(--video)}.t-music{background:var(--music)}
-.t-design{background:var(--design)}.t-content{background:var(--content)}
+.section-tag{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .7rem;border-radius:3px;color:#fff;font-weight:700}
+.t-video{background:var(--video)}.t-music{background:var(--music)}.t-design{background:var(--design)}.t-content{background:var(--content)}.t-trending{background:var(--trending)}
 .section-title{font-family:'Noto Serif KR',serif;font-size:1.2rem;font-weight:700;color:var(--text)}
-
-/* ITEM CARDS */
-.item{
-  background:var(--surface);
-  border:1.5px solid var(--border);
-  border-left:4px solid var(--border);
-  border-radius:6px;
-  padding:1.4rem 1.6rem;
-  margin-bottom:1rem;
-  transition:border-color .2s,box-shadow .2s;
-}
-.item:hover{
-  border-left-color:var(--accent);
-  box-shadow:0 4px 20px rgba(29,78,216,.08);
-}
+.item{background:var(--surface);border:1.5px solid var(--border);border-left:4px solid var(--border);border-radius:6px;padding:1.4rem 1.6rem;margin-bottom:1rem;transition:border-color .2s,box-shadow .2s}
+.item:hover{border-left-color:var(--accent);box-shadow:0 4px 20px rgba(29,78,216,.08)}
 [data-theme="dark"] .item:hover{box-shadow:0 4px 20px rgba(59,130,246,.12)}
-
 .item-meta{display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:center;margin-bottom:.65rem}
-.item-title{
-  font-family:'Noto Serif KR',serif;
-  font-size:1.05rem;font-weight:700;
-  line-height:1.45;color:var(--text);
-}
-.item-date{
-  font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;
-  color:var(--muted);
-  background:var(--surface2);
-  border:1.5px solid var(--border);
-  padding:.13rem .45rem;border-radius:3px;
-}
-.item-source{
-  font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;
-  color:var(--accent2);text-transform:uppercase;letter-spacing:.06em;
-}
-.item-summary{
-  font-size:.92rem;line-height:1.85;
-  color:var(--text-sub);font-weight:400;
-  margin:.65rem 0;
-}
-.item-imp{
-  border-left:4px solid var(--imp-border);
-  padding:.65rem 1.1rem;
-  margin:.8rem 0 .5rem;
-  background:var(--imp-bg);
-  border-radius:0 4px 4px 0;
-  font-size:.88rem;line-height:1.75;
-  color:var(--text-sub);font-weight:500;
-}
-.item-imp strong{
-  display:block;margin-bottom:.25rem;
-  font-family:'Space Mono',monospace;font-size:.62rem;
-  letter-spacing:.1em;text-transform:uppercase;
-  color:var(--accent);font-weight:700;
-}
-.item-link{
-  display:inline-flex;align-items:center;gap:.3rem;
-  margin-top:.5rem;
-  font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;
-  color:var(--accent);
-  border-bottom:1.5px solid transparent;
-  transition:border-color .15s;
-  word-break:break-all;
-}
+.item-title{font-family:'Noto Serif KR',serif;font-size:1.05rem;font-weight:700;line-height:1.45;color:var(--text)}
+.item-date{font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;color:var(--muted);background:var(--surface2);border:1.5px solid var(--border);padding:.13rem .45rem;border-radius:3px}
+.item-source{font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:.06em}
+.item-platform{font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;color:var(--trending);text-transform:uppercase;letter-spacing:.06em;background:rgba(217,119,6,.1);padding:.13rem .45rem;border-radius:3px}
+[data-theme="dark"] .item-platform{background:rgba(251,191,36,.1)}
+.item-summary{font-size:.92rem;line-height:1.85;color:var(--text-sub);font-weight:400;margin:.65rem 0}
+.item-imp{border-left:4px solid var(--imp-border);padding:.65rem 1.1rem;margin:.8rem 0 .5rem;background:var(--imp-bg);border-radius:0 4px 4px 0;font-size:.88rem;line-height:1.75;color:var(--text-sub);font-weight:500}
+.item-imp strong{display:block;margin-bottom:.25rem;font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.item-link{display:inline-flex;align-items:center;gap:.3rem;margin-top:.5rem;font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;color:var(--accent);border-bottom:1.5px solid transparent;transition:border-color .15s;word-break:break-all}
 .item-link:hover{border-bottom-color:var(--accent)}
-.empty{
-  color:var(--muted);font-size:.82rem;font-weight:700;
-  padding:1.4rem;border:1.5px dashed var(--border);
-  text-align:center;border-radius:6px;
-  font-family:'Space Mono',monospace;letter-spacing:.06em;
-}
-
-/* KEYWORD CLOUD */
+.empty{color:var(--muted);font-size:.82rem;font-weight:700;padding:1.4rem;border:1.5px dashed var(--border);text-align:center;border-radius:6px;font-family:'Space Mono',monospace;letter-spacing:.06em}
 .kw-cloud{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem 1.4rem;padding:2rem 0}
-.kw{font-family:'Bebas Neue',sans-serif;letter-spacing:.06em;transition:color .2s,opacity .2s;cursor:default}
+.kw{font-family:'Bebas Neue',sans-serif;letter-spacing:.06em;transition:opacity .2s;cursor:default}
 .kw:hover{opacity:.7}
-.kw-1{font-size:2.6rem;color:var(--kw1);font-weight:900}
-.kw-2{font-size:1.9rem;color:var(--kw2)}
-.kw-3{font-size:1.4rem;color:var(--kw3)}
-.kw-4{font-size:1.08rem;color:var(--kw4)}
-.kw-5{font-size:.88rem;color:var(--kw5)}
-
-/* ARCHIVE GRID */
-.archive-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-  gap:1.5px;background:var(--border);
-  border:1.5px solid var(--border);
-  border-radius:8px;overflow:hidden;
-}
+.kw-1{font-size:2.6rem;color:var(--kw1)}.kw-2{font-size:1.9rem;color:var(--kw2)}.kw-3{font-size:1.4rem;color:var(--kw3)}.kw-4{font-size:1.08rem;color:var(--kw4)}.kw-5{font-size:.88rem;color:var(--kw5)}
+.archive-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5px;background:var(--border);border:1.5px solid var(--border);border-radius:8px;overflow:hidden}
 .archive-card{background:var(--surface);padding:1.8rem;transition:background .15s}
 .archive-card:hover{background:var(--surface2)}
 .ac-date{font-family:'Space Mono',monospace;font-size:.64rem;font-weight:700;color:var(--accent);letter-spacing:.1em;margin-bottom:.55rem}
 .ac-title{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:.06em;color:var(--text);margin-bottom:.85rem;line-height:1.1}
 .ac-kws{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1.1rem}
-.ac-kw{
-  font-family:'Space Mono',monospace;font-size:.6rem;font-weight:700;
-  color:var(--muted);border:1.5px solid var(--border);
-  padding:.12rem .45rem;border-radius:3px;
-}
-.ac-link{
-  font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;
-  color:var(--accent);border-bottom:1.5px solid var(--accent);
-  display:inline-block;
-}
-
-/* MISC */
+.ac-kw{font-family:'Space Mono',monospace;font-size:.6rem;font-weight:700;color:var(--muted);border:1.5px solid var(--border);padding:.12rem .45rem;border-radius:3px}
+.ac-link{font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;color:var(--accent);border-bottom:1.5px solid var(--accent);display:inline-block}
 hr.div{border:none;border-top:1.5px solid var(--border);margin:2.8rem 0 0}
-footer{
-  text-align:center;padding:3rem 1rem;
-  border-top:1.5px solid var(--border);margin-top:4rem;
-  font-family:'Space Mono',monospace;font-size:.64rem;font-weight:700;
-  color:var(--muted);letter-spacing:.08em;line-height:2.4;
-}
-@media(max-width:600px){
-  .hero{padding:3rem 1rem 2rem}
-  .container{padding:0 1rem}
-  .hero-meta{gap:.8rem}
-  nav{padding:.8rem 1rem}
-}
+footer{text-align:center;padding:3rem 1rem;border-top:1.5px solid var(--border);margin-top:4rem;font-family:'Space Mono',monospace;font-size:.64rem;font-weight:700;color:var(--muted);letter-spacing:.08em;line-height:2.4}
+@media(max-width:600px){.hero{padding:3rem 1rem 2rem}.container{padding:0 1rem}.hero-meta{gap:.8rem}nav{padding:.8rem 1rem}}
 """
 
-# ── 다크모드 토글 JS ──────────────────────────────────────
-THEME_JS = """
-<script>
+THEME_JS = """<script>
 (function(){
-  var saved = localStorage.getItem('theme');
-  if(saved) document.documentElement.setAttribute('data-theme', saved);
+  var s = localStorage.getItem('theme');
+  if(s) document.documentElement.setAttribute('data-theme', s);
 })();
 function toggleTheme(){
-  var cur = document.documentElement.getAttribute('data-theme');
-  var next = cur === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', next);
-  localStorage.setItem('theme', next);
-  var icon = document.getElementById('toggle-icon');
-  if(icon) icon.textContent = next === 'dark' ? '☀' : '☽';
+  var c = document.documentElement.getAttribute('data-theme');
+  var n = c === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', n);
+  localStorage.setItem('theme', n);
+  var i = document.getElementById('toggle-icon');
+  if(i) i.textContent = n === 'dark' ? '☀' : '☽';
 }
-</script>
-"""
+</script>"""
 
-def nav_html(back_link="index.html", back_label="← 아카이브"):
+def nav_html(back_link, back_label):
     return f"""<nav>
   <span class="nav-logo">AI BRIEF</span>
   <div class="nav-right">
     <div class="nav-links"><a href="{back_link}">{back_label}</a></div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="다크모드 전환">
       <span class="toggle-track"><span class="toggle-thumb"></span></span>
-      <span class="toggle-icon" id="toggle-icon">☽</span>
+      <span id="toggle-icon">☽</span>
     </button>
   </div>
 </nav>"""
 
-# ── HTML 조립 ─────────────────────────────────────────────
+# ── 섹션 메타 (5개) ───────────────────────────────────────
 SECTION_META = [
-    ("video",   "01 /", "t-video",   "VIDEO AI",   "비디오 AI"),
-    ("music",   "02 /", "t-music",   "MUSIC AI",   "뮤직 AI"),
-    ("design",  "03 /", "t-design",  "DESIGN AI",  "디자인 AI"),
-    ("content", "04 /", "t-content", "AI CONTENT", "AI 콘텐츠·마케팅"),
+    ("video",    "01 /", "t-video",    "VIDEO AI",    "비디오 AI 모델"),
+    ("music",    "02 /", "t-music",    "MUSIC AI",    "뮤직 AI 모델"),
+    ("design",   "03 /", "t-design",   "DESIGN AI",   "디자인 AI 모델"),
+    ("content",  "04 /", "t-content",  "AI CONTENT",  "AI 콘텐츠·마케팅"),
+    ("trending", "05 /", "t-trending", "TRENDING",    "급상승 콘텐츠"),
 ]
 
-def build_items(items):
+def build_items(items, is_trending=False):
     if not items:
-        return '<div class="empty">발견된 이슈없음</div>'
+        return '<div class="empty">이번 기간 해당 이슈 없음</div>'
     html = ""
     for it in items:
+        # 트렌딩은 platform 배지, 나머지는 source
+        if is_trending:
+            badge = f'<span class="item-platform">{it.get("platform","")}</span>'
+        else:
+            badge = f'<span class="item-source">{it.get("source","")}</span>'
         html += f"""<div class="item">
   <div class="item-meta">
     <span class="item-date">{it.get('date','')}</span>
-    <span class="item-source">{it.get('source','')}</span>
+    {badge}
   </div>
   <div class="item-title">{it.get('title','')}</div>
   <p class="item-summary">{it.get('summary','')}</p>
-  <div class="item-imp"><strong>실무 시사점</strong>{it.get('implication','')}</div>
+  <div class="item-imp"><strong>{'트렌드 인사이트' if is_trending else '실무 시사점'}</strong>{it.get('implication','')}</div>
   <a class="item-link" href="{it.get('url','#')}" target="_blank">→ 원문 링크</a>
 </div>"""
     return html
@@ -429,13 +290,14 @@ def build_items(items):
 def build_sections(sec):
     html = ""
     for key, num, tag, en, ko in SECTION_META:
+        is_t = (key == "trending")
         html += f"""<div class="section">
   <div class="section-head">
     <span class="section-num">{num}</span>
     <span class="section-tag {tag}">{en}</span>
     <span class="section-title">{ko}</span>
   </div>
-  {build_items(sec.get(key, []))}
+  {build_items(sec.get(key, []), is_t)}
 </div>
 <hr class="div">"""
     return html
@@ -511,7 +373,7 @@ def index_html(briefs):
   <h1 class="hero-title">AI<br><span>크리에이티브</span><br>브리프</h1>
   <div class="hero-meta">
     <span>매주 월·목 자동 발행</span>
-    <span>Video / Music / Design / Content AI</span>
+    <span>Video · Music · Design · Content · Trending</span>
     <span>총 {total}개 브리프</span>
   </div>
 </div>
