@@ -1,8 +1,8 @@
 """
-AI Creative Weekly Brief v3
-- Claude가 JSON 데이터만 생성 (토큰 절약, 끊김 방지)
-- Python이 HTML 완전 조립
-- Sound Republica 다크 디자인
+AI Creative Weekly Brief v4
+- 라이트 기본 / 다크모드 토글
+- 메인 컬러 블루 계열
+- 가독성 개선 (볼드, 대비 강화)
 """
 
 import os, json, re
@@ -108,58 +108,300 @@ print(f"[INFO] 키워드: {[k['word'] for k in keywords]}")
 for k, v in sections.items():
     print(f"  v {k}: {len(v)}건")
 
+# ── CSS: 라이트 기본 + 다크모드 토글 + 블루 계열 ──────────
 CSS = """
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700&family=Space+Mono:wght@400;700&family=Noto+Serif+KR:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&family=Noto+Serif+KR:wght@400;700&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#0a0a0a;--surface:#111;--surface2:#1a1a1a;--border:#2a2a2a;--text:#e8e4dc;--muted:#6b6860;--accent:#e8c547;--accent2:#4a9eff;--video:#4a9eff;--music:#b47dff;--design:#4ecf8a;--content:#ff6b6b}
-html{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:15px;line-height:1.7}
+
+/* ── 라이트 모드 (기본) ── */
+:root{
+  --bg:#f8f9fc;
+  --surface:#ffffff;
+  --surface2:#f0f3f8;
+  --border:#dde3ee;
+  --text:#0f1623;
+  --text-sub:#374151;
+  --muted:#6b7280;
+  --accent:#1d4ed8;
+  --accent-light:#eff6ff;
+  --accent2:#0ea5e9;
+  --video:#2563eb;
+  --music:#7c3aed;
+  --design:#059669;
+  --content:#dc2626;
+  --nav-bg:rgba(248,249,252,0.94);
+  --imp-bg:#eff6ff;
+  --imp-border:#1d4ed8;
+  --kw1:#0f1623;--kw2:#1e3a6e;--kw3:#2563eb;--kw4:#6b7280;--kw5:#9ca3af;
+}
+
+/* ── 다크 모드 ── */
+[data-theme="dark"]{
+  --bg:#080d16;
+  --surface:#0f1623;
+  --surface2:#161f30;
+  --border:#1e2d45;
+  --text:#e8edf5;
+  --text-sub:#b8c4d4;
+  --muted:#5a7090;
+  --accent:#3b82f6;
+  --accent-light:#0f1e35;
+  --accent2:#38bdf8;
+  --video:#3b82f6;
+  --music:#a78bfa;
+  --design:#34d399;
+  --content:#f87171;
+  --nav-bg:rgba(8,13,22,0.94);
+  --imp-bg:#0f1e35;
+  --imp-border:#3b82f6;
+  --kw1:#e8edf5;--kw2:#93c5fd;--kw3:#3b82f6;--kw4:#5a7090;--kw5:#374151;
+}
+
+html{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:15px;line-height:1.75;transition:background .25s,color .25s}
 a{color:inherit;text-decoration:none}
-::selection{background:var(--accent);color:#000}
-nav{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:.9rem 2rem;background:rgba(10,10,10,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
-.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.12em;color:var(--accent)}
-.nav-links{display:flex;gap:1.5rem;font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.1em;color:var(--muted)}
+::selection{background:var(--accent);color:#fff}
+
+/* NAV */
+nav{
+  position:sticky;top:0;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:.85rem 2rem;
+  background:var(--nav-bg);
+  backdrop-filter:blur(14px);
+  border-bottom:1.5px solid var(--border);
+  transition:background .25s,border-color .25s;
+}
+.nav-logo{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.45rem;letter-spacing:.14em;
+  color:var(--accent);
+}
+.nav-right{display:flex;align-items:center;gap:1.6rem}
+.nav-links{display:flex;gap:1.4rem;font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
 .nav-links a:hover{color:var(--text)}
-.hero{padding:5rem 2rem 3rem;border-bottom:1px solid var(--border);max-width:1100px;margin:0 auto}
-.hero-eyebrow{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem}
-.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,10vw,7rem);letter-spacing:.04em;line-height:.95;color:var(--text)}
+
+/* 다크모드 토글 */
+.theme-toggle{
+  display:flex;align-items:center;gap:.5rem;
+  font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.06em;
+  color:var(--muted);cursor:pointer;border:none;background:none;padding:0;
+}
+.toggle-track{
+  width:36px;height:20px;
+  background:var(--border);
+  border-radius:10px;
+  position:relative;
+  transition:background .25s;
+  border:1.5px solid var(--border);
+}
+[data-theme="dark"] .toggle-track{background:var(--accent)}
+.toggle-thumb{
+  position:absolute;top:2px;left:2px;
+  width:14px;height:14px;
+  background:#fff;border-radius:50%;
+  transition:transform .2s;
+  box-shadow:0 1px 3px rgba(0,0,0,.2);
+}
+[data-theme="dark"] .toggle-thumb{transform:translateX(16px)}
+.toggle-icon{font-size:13px}
+
+/* HERO */
+.hero{
+  padding:5rem 2rem 3.5rem;
+  border-bottom:1.5px solid var(--border);
+  max-width:1100px;margin:0 auto;
+}
+.hero-eyebrow{
+  font-family:'Space Mono',monospace;font-size:.68rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--accent);font-weight:700;margin-bottom:1.1rem;
+}
+.hero-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(3.8rem,10vw,7.5rem);
+  letter-spacing:.04em;line-height:.92;color:var(--text);
+}
 .hero-title span{color:var(--accent)}
-.hero-meta{display:flex;flex-wrap:wrap;gap:1.5rem;margin-top:1.5rem;font-family:'Space Mono',monospace;font-size:.68rem;color:var(--muted);letter-spacing:.06em}
+.hero-meta{
+  display:flex;flex-wrap:wrap;gap:1.4rem;margin-top:1.8rem;
+  font-family:'Space Mono',monospace;font-size:.7rem;
+  color:var(--muted);letter-spacing:.05em;font-weight:700;
+}
+.hero-meta span::before{content:'— ';opacity:.4}
+
+/* LAYOUT */
 .container{max-width:1100px;margin:0 auto;padding:0 2rem}
-.section{margin-top:2.8rem}
-.section-head{display:flex;align-items:center;gap:1rem;padding:.5rem 0;border-top:1px solid var(--border);margin-bottom:1.2rem}
-.section-num{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:.14em}
-.section-tag{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:.22rem .65rem;border-radius:2px;color:#000;font-weight:700}
-.t-video{background:var(--video)}.t-music{background:var(--music)}.t-design{background:var(--design)}.t-content{background:var(--content)}
-.section-title{font-family:'Noto Serif KR',serif;font-size:1.15rem;font-weight:700;color:var(--text)}
-.item{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--border);border-radius:3px;padding:1.2rem 1.5rem;margin-bottom:.9rem;transition:border-color .2s,background .2s}
-.item:hover{border-left-color:var(--accent);background:var(--surface2)}
-.item-meta{display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:center;margin-bottom:.6rem}
-.item-title{font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;line-height:1.4;color:var(--text)}
-.item-date{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);background:var(--surface2);border:1px solid var(--border);padding:.12rem .4rem;border-radius:2px}
-.item-source{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--accent2);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
-.item-summary{font-size:.88rem;line-height:1.8;color:#c0bbb2;margin:.6rem 0}
-.item-imp{border-left:3px solid var(--accent);padding:.55rem 1rem;margin:.7rem 0 .4rem;background:rgba(232,197,71,.05);font-size:.84rem;line-height:1.7;color:#d4cfc7}
-.item-imp strong{display:block;margin-bottom:.2rem;font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
-.item-link{display:inline-block;margin-top:.4rem;font-family:'Space Mono',monospace;font-size:.63rem;color:var(--accent2);border-bottom:1px dashed var(--accent2);word-break:break-all}
-.item-link:hover{color:var(--accent);border-color:var(--accent)}
-.empty{color:var(--muted);font-size:.82rem;padding:1.2rem;border:1px dashed var(--border);text-align:center;font-family:'Space Mono',monospace;letter-spacing:.06em}
-.kw-cloud{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem 1.2rem;padding:1.8rem 0}
-.kw{font-family:'Bebas Neue',sans-serif;letter-spacing:.06em;transition:color .2s;cursor:default}
-.kw:hover{color:var(--accent)}
-.kw-1{font-size:2.4rem;color:var(--text)}.kw-2{font-size:1.8rem;color:#bbb5ac}.kw-3{font-size:1.35rem;color:#8a857e}.kw-4{font-size:1.05rem;color:#6b6860}.kw-5{font-size:.85rem;color:#504e4a}
-.archive-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;background:var(--border)}
-.archive-card{background:var(--bg);padding:1.8rem;transition:background .15s}
-.archive-card:hover{background:var(--surface)}
-.ac-date{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--accent);letter-spacing:.1em;margin-bottom:.5rem}
-.ac-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.06em;color:var(--text);margin-bottom:.8rem;line-height:1.1}
-.ac-kws{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:1rem}
-.ac-kw{font-family:'Space Mono',monospace;font-size:.58rem;color:var(--muted);border:1px solid var(--border);padding:.1rem .4rem;border-radius:2px}
-.ac-link{font-family:'Space Mono',monospace;font-size:.63rem;color:var(--accent2);border-bottom:1px dashed var(--accent2)}
-hr.div{border:none;border-top:1px solid var(--border);margin:2.5rem 0 0}
-footer{text-align:center;padding:3rem 1rem;border-top:1px solid var(--border);margin-top:4rem;font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);letter-spacing:.08em;line-height:2.2}
-@media(max-width:600px){.hero{padding:3rem 1rem 2rem}.container{padding:0 1rem}}
+.section{margin-top:3rem}
+
+/* SECTION HEAD */
+.section-head{
+  display:flex;align-items:center;gap:1rem;
+  padding:.6rem 0;
+  border-top:2px solid var(--text);
+  margin-bottom:1.4rem;
+}
+.section-num{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);letter-spacing:.14em;font-weight:700}
+.section-tag{
+  font-family:'Space Mono',monospace;font-size:.62rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:.25rem .7rem;border-radius:3px;
+  color:#fff;font-weight:700;
+}
+.t-video{background:var(--video)}.t-music{background:var(--music)}
+.t-design{background:var(--design)}.t-content{background:var(--content)}
+.section-title{font-family:'Noto Serif KR',serif;font-size:1.2rem;font-weight:700;color:var(--text)}
+
+/* ITEM CARDS */
+.item{
+  background:var(--surface);
+  border:1.5px solid var(--border);
+  border-left:4px solid var(--border);
+  border-radius:6px;
+  padding:1.4rem 1.6rem;
+  margin-bottom:1rem;
+  transition:border-color .2s,box-shadow .2s;
+}
+.item:hover{
+  border-left-color:var(--accent);
+  box-shadow:0 4px 20px rgba(29,78,216,.08);
+}
+[data-theme="dark"] .item:hover{box-shadow:0 4px 20px rgba(59,130,246,.12)}
+
+.item-meta{display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:center;margin-bottom:.65rem}
+.item-title{
+  font-family:'Noto Serif KR',serif;
+  font-size:1.05rem;font-weight:700;
+  line-height:1.45;color:var(--text);
+}
+.item-date{
+  font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;
+  color:var(--muted);
+  background:var(--surface2);
+  border:1.5px solid var(--border);
+  padding:.13rem .45rem;border-radius:3px;
+}
+.item-source{
+  font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;
+  color:var(--accent2);text-transform:uppercase;letter-spacing:.06em;
+}
+.item-summary{
+  font-size:.92rem;line-height:1.85;
+  color:var(--text-sub);font-weight:400;
+  margin:.65rem 0;
+}
+.item-imp{
+  border-left:4px solid var(--imp-border);
+  padding:.65rem 1.1rem;
+  margin:.8rem 0 .5rem;
+  background:var(--imp-bg);
+  border-radius:0 4px 4px 0;
+  font-size:.88rem;line-height:1.75;
+  color:var(--text-sub);font-weight:500;
+}
+.item-imp strong{
+  display:block;margin-bottom:.25rem;
+  font-family:'Space Mono',monospace;font-size:.62rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent);font-weight:700;
+}
+.item-link{
+  display:inline-flex;align-items:center;gap:.3rem;
+  margin-top:.5rem;
+  font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;
+  color:var(--accent);
+  border-bottom:1.5px solid transparent;
+  transition:border-color .15s;
+  word-break:break-all;
+}
+.item-link:hover{border-bottom-color:var(--accent)}
+.empty{
+  color:var(--muted);font-size:.82rem;font-weight:700;
+  padding:1.4rem;border:1.5px dashed var(--border);
+  text-align:center;border-radius:6px;
+  font-family:'Space Mono',monospace;letter-spacing:.06em;
+}
+
+/* KEYWORD CLOUD */
+.kw-cloud{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem 1.4rem;padding:2rem 0}
+.kw{font-family:'Bebas Neue',sans-serif;letter-spacing:.06em;transition:color .2s,opacity .2s;cursor:default}
+.kw:hover{opacity:.7}
+.kw-1{font-size:2.6rem;color:var(--kw1);font-weight:900}
+.kw-2{font-size:1.9rem;color:var(--kw2)}
+.kw-3{font-size:1.4rem;color:var(--kw3)}
+.kw-4{font-size:1.08rem;color:var(--kw4)}
+.kw-5{font-size:.88rem;color:var(--kw5)}
+
+/* ARCHIVE GRID */
+.archive-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:1.5px;background:var(--border);
+  border:1.5px solid var(--border);
+  border-radius:8px;overflow:hidden;
+}
+.archive-card{background:var(--surface);padding:1.8rem;transition:background .15s}
+.archive-card:hover{background:var(--surface2)}
+.ac-date{font-family:'Space Mono',monospace;font-size:.64rem;font-weight:700;color:var(--accent);letter-spacing:.1em;margin-bottom:.55rem}
+.ac-title{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:.06em;color:var(--text);margin-bottom:.85rem;line-height:1.1}
+.ac-kws{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1.1rem}
+.ac-kw{
+  font-family:'Space Mono',monospace;font-size:.6rem;font-weight:700;
+  color:var(--muted);border:1.5px solid var(--border);
+  padding:.12rem .45rem;border-radius:3px;
+}
+.ac-link{
+  font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;
+  color:var(--accent);border-bottom:1.5px solid var(--accent);
+  display:inline-block;
+}
+
+/* MISC */
+hr.div{border:none;border-top:1.5px solid var(--border);margin:2.8rem 0 0}
+footer{
+  text-align:center;padding:3rem 1rem;
+  border-top:1.5px solid var(--border);margin-top:4rem;
+  font-family:'Space Mono',monospace;font-size:.64rem;font-weight:700;
+  color:var(--muted);letter-spacing:.08em;line-height:2.4;
+}
+@media(max-width:600px){
+  .hero{padding:3rem 1rem 2rem}
+  .container{padding:0 1rem}
+  .hero-meta{gap:.8rem}
+  nav{padding:.8rem 1rem}
+}
 """
 
+# ── 다크모드 토글 JS ──────────────────────────────────────
+THEME_JS = """
+<script>
+(function(){
+  var saved = localStorage.getItem('theme');
+  if(saved) document.documentElement.setAttribute('data-theme', saved);
+})();
+function toggleTheme(){
+  var cur = document.documentElement.getAttribute('data-theme');
+  var next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  var icon = document.getElementById('toggle-icon');
+  if(icon) icon.textContent = next === 'dark' ? '☀' : '☽';
+}
+</script>
+"""
+
+def nav_html(back_link="index.html", back_label="← 아카이브"):
+    return f"""<nav>
+  <span class="nav-logo">AI BRIEF</span>
+  <div class="nav-right">
+    <div class="nav-links"><a href="{back_link}">{back_label}</a></div>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="다크모드 전환">
+      <span class="toggle-track"><span class="toggle-thumb"></span></span>
+      <span class="toggle-icon" id="toggle-icon">☽</span>
+    </button>
+  </div>
+</nav>"""
+
+# ── HTML 조립 ─────────────────────────────────────────────
 SECTION_META = [
     ("video",   "01 /", "t-video",   "VIDEO AI",   "비디오 AI"),
     ("music",   "02 /", "t-music",   "MUSIC AI",   "뮤직 AI"),
@@ -187,8 +429,7 @@ def build_items(items):
 def build_sections(sec):
     html = ""
     for key, num, tag, en, ko in SECTION_META:
-        html += f"""
-<div class="section">
+        html += f"""<div class="section">
   <div class="section-head">
     <span class="section-num">{num}</span>
     <span class="section-tag {tag}">{en}</span>
@@ -214,13 +455,11 @@ def brief_html(sec, kws):
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>AI 크리에이티브 브리프 — {today_str}</title>
+{THEME_JS}
 <style>{CSS}</style>
 </head>
 <body>
-<nav>
-  <span class="nav-logo">AI BRIEF</span>
-  <div class="nav-links"><a href="index.html">← 아카이브</a></div>
-</nav>
+{nav_html("index.html", "← 아카이브")}
 <div class="hero">
   <p class="hero-eyebrow">AI CREATIVE BRIEF · {edition.upper()} EDITION</p>
   <h1 class="hero-title">AI<br><span>크리에이티브</span><br>브리프</h1>
@@ -241,29 +480,32 @@ def brief_html(sec, kws):
 </html>"""
 
 def index_html(briefs):
-    total    = len(briefs)
-    latest   = briefs[0] if briefs else {}
-    lf       = latest.get("filename", "#")
-    ld       = latest.get("date", today_str)
-    lk       = latest.get("keywords", [])
-    kw_html  = build_kw_cloud(lk) if lk else ""
-    cards    = ""
+    total  = len(briefs)
+    latest = briefs[0] if briefs else {}
+    lf     = latest.get("filename", "#")
+    ld     = latest.get("date", today_str)
+    lk     = latest.get("keywords", [])
+    kw_html = build_kw_cloud(lk) if lk else ""
+    cards = ""
     for b in briefs:
         kws_h = "".join(f'<span class="ac-kw">{k["word"]}</span>' for k in b.get("keywords",[]))
-        cards += f'<div class="archive-card"><div class="ac-date">{b["date"]} · {b["edition"]} 판</div><div class="ac-title">AI 크리에이티브<br>브리프</div><div class="ac-kws">{kws_h}</div><a class="ac-link" href="{b["filename"]}">브리프 보기 →</a></div>'
+        cards += f"""<div class="archive-card">
+  <div class="ac-date">{b['date']} · {b['edition']} 판</div>
+  <div class="ac-title">AI 크리에이티브<br>브리프</div>
+  <div class="ac-kws">{kws_h}</div>
+  <a class="ac-link" href="{b['filename']}">브리프 보기 →</a>
+</div>"""
     return f"""<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>AI 크리에이티브 브리프 — 아카이브</title>
+{THEME_JS}
 <style>{CSS}</style>
 </head>
 <body>
-<nav>
-  <span class="nav-logo">AI BRIEF</span>
-  <div class="nav-links"><a href="{lf}">최신 브리프</a><span>아카이브</span></div>
-</nav>
+{nav_html(lf, "최신 브리프")}
 <div class="hero">
   <p class="hero-eyebrow">AI CREATIVE BRIEF · ARCHIVE</p>
   <h1 class="hero-title">AI<br><span>크리에이티브</span><br>브리프</h1>
@@ -281,7 +523,9 @@ def index_html(briefs):
       <span class="section-title">주요 키워드 — {ld}</span>
     </div>
     {kw_html}
-    <div style="margin-top:1.2rem"><a href="{lf}" class="item-link" style="font-size:.75rem">→ 최신 브리프 전체 보기</a></div>
+    <div style="margin-top:1.2rem">
+      <a href="{lf}" class="item-link" style="font-size:.75rem">→ 최신 브리프 전체 보기</a>
+    </div>
   </div>
   <hr class="div">
   <div class="section">
@@ -293,10 +537,15 @@ def index_html(briefs):
     <div class="archive-grid">{cards}</div>
   </div>
 </div>
-<footer>AI CREATIVE BRIEF · 매주 월·목 자동 발행<br>GitHub Actions + Claude API + Tavily<br><span style="font-size:.55rem;opacity:.5">Generated {today_str}</span></footer>
+<footer>
+  AI CREATIVE BRIEF · 매주 월·목 자동 발행<br>
+  GitHub Actions + Claude API + Tavily<br>
+  <span style="font-size:.6rem;opacity:.5">Generated {today_str}</span>
+</footer>
 </body>
 </html>"""
 
+# ── 저장 ──────────────────────────────────────────────────
 brief_fn = f"brief_{today_str}.html"
 with open(brief_fn, "w", encoding="utf-8") as f:
     f.write(brief_html(sections, keywords))
