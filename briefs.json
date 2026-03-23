@@ -1,5 +1,32 @@
 [
   {
+    "date": "2026-03-23",
+    "edition": "월요일",
+    "filename": "brief_2026-03-23.html",
+    "keywords": [
+      {
+        "word": "AI 비디오 생성",
+        "score": 5
+      },
+      {
+        "word": "AI 저작권 규제",
+        "score": 5
+      },
+      {
+        "word": "숏폼 트렌드",
+        "score": 4
+      },
+      {
+        "word": "Canva Magic Studio",
+        "score": 3
+      },
+      {
+        "word": "Suno V5",
+        "score": 3
+      }
+    ]
+  },
+  {
     "date": "2026-03-20",
     "edition": "목요일",
     "filename": "brief_2026-03-20.html",
