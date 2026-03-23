@@ -1,36 +1,19 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>AI 크리에이티브 브리프 — 아카이브</title>
 <script>
 (function(){var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);})();
-function toggleTheme(){
-  var c=document.documentElement.getAttribute('data-theme');
-  var n=c==='dark'?'light':'dark';
-  document.documentElement.setAttribute('data-theme',n);
-  localStorage.setItem('theme',n);
-  var i=document.getElementById('toggle-icon');
-  if(i)i.textContent=n==='dark'?'☀':'☽';
-}
-function goTo(id){
-  var el=document.getElementById(id);
-  if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
-}
+function toggleTheme(){var c=document.documentElement.getAttribute('data-theme');var n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('theme',n);var i=document.getElementById('toggle-icon');if(i)i.textContent=n==='dark'?'☀':'☽';}
+function goTo(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
 window.addEventListener('scroll',function(){
   var ids=['s-video','s-music','s-design','s-content','s-trending','s-signals'];
   var current='';
-  ids.forEach(function(id){
-    var el=document.getElementById(id);
-    if(el&&el.getBoundingClientRect().top<=120)current=id;
-  });
-  document.querySelectorAll('.cat-btn').forEach(function(b){
-    b.classList.toggle('active',b.dataset.target===current);
-  });
+  ids.forEach(function(id){var el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<=120)current=id;});
+  document.querySelectorAll('.cat-btn').forEach(function(b){b.classList.toggle('active',b.dataset.target===current);});
 });
-</script>
-<style>
+</script><style>
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&family=Noto+Serif+KR:wght@400;700&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -52,8 +35,6 @@ window.addEventListener('scroll',function(){
 html{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:15px;line-height:1.75;transition:background .25s,color .25s}
 a{color:inherit;text-decoration:none}
 ::selection{background:var(--accent);color:#fff}
-
-/* 메인 네비게이션 */
 nav{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:.85rem 2rem;background:var(--nav-bg);backdrop-filter:blur(14px);border-bottom:1.5px solid var(--border);transition:background .25s,border-color .25s}
 .nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.45rem;letter-spacing:.14em;color:var(--accent)}
 .nav-right{display:flex;align-items:center;gap:1.6rem}
@@ -64,24 +45,18 @@ nav{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between
 [data-theme="dark"] .toggle-track{background:var(--accent)}
 .toggle-thumb{position:absolute;top:2px;left:2px;width:14px;height:14px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
 [data-theme="dark"] .toggle-thumb{transform:translateX(16px)}
-
-/* 카테고리 스티키 네비게이션 */
 .cat-nav{position:sticky;top:56px;z-index:99;background:var(--nav-bg);backdrop-filter:blur(14px);border-bottom:1.5px solid var(--border);transition:background .25s}
 .cat-nav-inner{max-width:1100px;margin:0 auto;padding:0 2rem;display:flex;overflow-x:auto;scrollbar-width:none}
 .cat-nav-inner::-webkit-scrollbar{display:none}
 .cat-btn{font-family:'Space Mono',monospace;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.75rem 1.1rem;color:var(--muted);border:none;border-bottom:2px solid transparent;background:none;cursor:pointer;white-space:nowrap;transition:color .15s,border-color .15s}
 .cat-btn:hover{color:var(--text)}
 .cat-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
-
-/* 히어로 */
 .hero{padding:5rem 2rem 3.5rem;border-bottom:1.5px solid var(--border);max-width:1100px;margin:0 auto}
 .hero-eyebrow{font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:1.1rem}
 .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.8rem,10vw,7.5rem);letter-spacing:.04em;line-height:.92;color:var(--text)}
 .hero-title span{color:var(--accent)}
 .hero-meta{display:flex;flex-wrap:wrap;gap:1.4rem;margin-top:1.8rem;font-family:'Space Mono',monospace;font-size:.7rem;color:var(--muted);letter-spacing:.05em;font-weight:700}
 .hero-meta span::before{content:'— ';opacity:.4}
-
-/* 레이아웃 */
 .container{max-width:1100px;margin:0 auto;padding:0 2rem}
 .section{margin-top:3rem;scroll-margin-top:110px}
 .section-head{display:flex;align-items:center;gap:1rem;padding:.6rem 0;border-top:2px solid var(--text);margin-bottom:1.4rem}
@@ -89,8 +64,6 @@ nav{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between
 .section-tag{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .7rem;border-radius:3px;color:#fff;font-weight:700}
 .t-video{background:var(--video)}.t-music{background:var(--music)}.t-design{background:var(--design)}.t-content{background:var(--content)}.t-trending{background:var(--trending)}.t-signal{background:var(--signal)}
 .section-title{font-family:'Noto Serif KR',serif;font-size:1.2rem;font-weight:700;color:var(--text)}
-
-/* 아이템 카드 */
 .item{background:var(--surface);border:1.5px solid var(--border);border-left:4px solid var(--border);border-radius:6px;padding:1.4rem 1.6rem;margin-bottom:1rem;transition:border-color .2s,box-shadow .2s}
 .item:hover{border-left-color:var(--accent);box-shadow:0 4px 20px rgba(29,78,216,.08)}
 [data-theme="dark"] .item:hover{box-shadow:0 4px 20px rgba(59,130,246,.12)}
@@ -107,18 +80,12 @@ nav{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between
 .item-link{display:inline-flex;align-items:center;gap:.3rem;margin-top:.5rem;font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;color:var(--accent);border-bottom:1.5px solid transparent;transition:border-color .15s;word-break:break-all}
 .item-link:hover{border-bottom-color:var(--accent)}
 .empty{color:var(--muted);font-size:.82rem;font-weight:700;padding:1.4rem;border:1.5px dashed var(--border);text-align:center;border-radius:6px;font-family:'Space Mono',monospace;letter-spacing:.06em}
-
-/* 키워드 클라우드 */
 .kw-cloud{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem 1.4rem;padding:2rem 0}
 .kw{font-family:'Bebas Neue',sans-serif;letter-spacing:.06em;transition:opacity .2s;cursor:default}
 .kw:hover{opacity:.7}
 .kw-1{font-size:2.6rem;color:var(--kw1)}.kw-2{font-size:1.9rem;color:var(--kw2)}.kw-3{font-size:1.4rem;color:var(--kw3)}.kw-4{font-size:1.08rem;color:var(--kw4)}.kw-5{font-size:.88rem;color:var(--kw5)}
-
-/* 시그널 */
 .signals-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin-top:.5rem}
 .signal-card{background:var(--surface);border:1.5px solid var(--border);border-left:4px solid var(--signal);border-radius:6px;padding:1.1rem 1.3rem;font-size:.9rem;line-height:1.75;color:var(--text-sub);font-weight:500}
-
-/* 아카이브 */
 .archive-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5px;background:var(--border);border:1.5px solid var(--border);border-radius:8px;overflow:hidden}
 .archive-card{background:var(--surface);padding:1.8rem;transition:background .15s}
 .archive-card:hover{background:var(--surface2)}
@@ -127,7 +94,6 @@ nav{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between
 .ac-kws{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1.1rem}
 .ac-kw{font-family:'Space Mono',monospace;font-size:.6rem;font-weight:700;color:var(--muted);border:1.5px solid var(--border);padding:.12rem .45rem;border-radius:3px}
 .ac-link{font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;color:var(--accent);border-bottom:1.5px solid var(--accent);display:inline-block}
-
 hr.div{border:none;border-top:1.5px solid var(--border);margin:2.8rem 0 0}
 footer{text-align:center;padding:3rem 1rem;border-top:1.5px solid var(--border);margin-top:4rem;font-family:'Space Mono',monospace;font-size:.64rem;font-weight:700;color:var(--muted);letter-spacing:.08em;line-height:2.4}
 @media(max-width:600px){.hero{padding:3rem 1rem 2rem}.container{padding:0 1rem}.hero-meta{gap:.8rem}nav{padding:.8rem 1rem}.signals-grid{grid-template-columns:1fr}.cat-nav-inner{padding:0 1rem}}
@@ -147,32 +113,19 @@ footer{text-align:center;padding:3rem 1rem;border-top:1.5px solid var(--border);
 <div class="hero">
   <p class="hero-eyebrow">AI CREATIVE BRIEF · ARCHIVE</p>
   <h1 class="hero-title">AI<br><span>크리에이티브</span><br>브리프</h1>
-  <div class="hero-meta">
-    <span>매주 월·목 자동 발행</span>
-    <span>Video · Music · Design · Content · Trending</span>
-    <span>총 3개 브리프</span>
-  </div>
+  <div class="hero-meta"><span>매주 월·목 자동 발행</span><span>Video · Music · Design · Content · Trending</span><span>총 3개 브리프</span></div>
 </div>
 <div class="container">
   <div class="section">
-    <div class="section-head">
-      <span class="section-num">이번 호 /</span>
-      <span class="section-tag t-video">KEYWORDS</span>
-      <span class="section-title">주요 키워드 — 2026-03-23</span>
-    </div>
-    <div class="kw-cloud"><span class="kw kw-3">AI영상생성</span><span class="kw kw-3">생성AI마케팅</span><span class="kw kw-3">크리에이티브자동화</span><span class="kw kw-4">AI음악도구</span><span class="kw kw-4">멀티모달AI</span></div>
+    <div class="section-head"><span class="section-num">이번 호 /</span><span class="section-tag t-video">KEYWORDS</span><span class="section-title">주요 키워드 — 2026-03-23</span></div>
+    <div class="kw-cloud"><span class="kw kw-1">온디바이스 생성</span><span class="kw kw-1">Firefly Custom Models</span><span class="kw kw-2">브랜드 일관성</span><span class="kw kw-2">Stitch</span><span class="kw kw-3">MAI-Image-2</span></div>
     <div style="margin-top:1.2rem"><a href="brief_2026-03-23.html" class="item-link" style="font-size:.75rem">→ 최신 브리프 전체 보기</a></div>
   </div>
   <hr class="div">
   <div class="section">
-    <div class="section-head">
-      <span class="section-num">전체 /</span>
-      <span class="section-tag t-content">ARCHIVE</span>
-      <span class="section-title">브리프 아카이브</span>
-    </div>
-    <div class="archive-grid"><div class="archive-card"><div class="ac-date">2026-03-23 · 월요일 판</div><div class="ac-title">AI 크리에이티브<br>브리프</div><div class="ac-kws"><span class="ac-kw">AI영상생성</span><span class="ac-kw">생성AI마케팅</span><span class="ac-kw">AI음악도구</span><span class="ac-kw">크리에이티브자동화</span><span class="ac-kw">멀티모달AI</span></div><a class="ac-link" href="brief_2026-03-23.html">브리프 보기 →</a></div><div class="archive-card"><div class="ac-date">2026-03-20 · 목요일 판</div><div class="ac-title">AI 크리에이티브<br>브리프</div><div class="ac-kws"><span class="ac-kw">AI 비디오 생성</span><span class="ac-kw">AI 음악 라이선싱</span><span class="ac-kw">숏폼 트렌드</span><span class="ac-kw">AI 콘텐츠 규제</span><span class="ac-kw">브랜드 안전</span></div><a class="ac-link" href="brief_2026-03-20.html">브리프 보기 →</a></div><div class="archive-card"><div class="ac-date">2026-03-19 · 목요일 판</div><div class="ac-title">AI 크리에이티브<br>브리프</div><div class="ac-kws"><span class="ac-kw">AI영상생성</span><span class="ac-kw">멀티모달파이프라인</span><span class="ac-kw">Figma AI</span><span class="ac-kw">AI저작권</span><span class="ac-kw">콘텐츠오케스트레이션</span></div><a class="ac-link" href="brief_2026-03-19.html">브리프 보기 →</a></div></div>
+    <div class="section-head"><span class="section-num">전체 /</span><span class="section-tag t-content">ARCHIVE</span><span class="section-title">브리프 아카이브</span></div>
+    <div class="archive-grid"><div class="archive-card"><div class="ac-date">2026-03-23 · 월요일 판</div><div class="ac-title">AI 크리에이티브<br>브리프</div><div class="ac-kws"><span class="ac-kw">온디바이스 생성</span><span class="ac-kw">Firefly Custom Models</span><span class="ac-kw">브랜드 일관성</span><span class="ac-kw">Stitch</span><span class="ac-kw">MAI-Image-2</span></div><a class="ac-link" href="brief_2026-03-23.html">브리프 보기 →</a></div><div class="archive-card"><div class="ac-date">2026-03-20 · 목요일 판</div><div class="ac-title">AI 크리에이티브<br>브리프</div><div class="ac-kws"><span class="ac-kw">AI 비디오 생성</span><span class="ac-kw">AI 음악 라이선싱</span><span class="ac-kw">숏폼 트렌드</span><span class="ac-kw">AI 콘텐츠 규제</span><span class="ac-kw">브랜드 안전</span></div><a class="ac-link" href="brief_2026-03-20.html">브리프 보기 →</a></div><div class="archive-card"><div class="ac-date">2026-03-19 · 목요일 판</div><div class="ac-title">AI 크리에이티브<br>브리프</div><div class="ac-kws"><span class="ac-kw">AI영상생성</span><span class="ac-kw">멀티모달파이프라인</span><span class="ac-kw">Figma AI</span><span class="ac-kw">AI저작권</span><span class="ac-kw">콘텐츠오케스트레이션</span></div><a class="ac-link" href="brief_2026-03-19.html">브리프 보기 →</a></div></div>
   </div>
 </div>
-<footer>AI CREATIVE BRIEF · 매주 월·목 자동 발행<br>GitHub Actions + OpenAI + Claude<br><span style="font-size:.6rem;opacity:.5">Generated 2026-03-23</span></footer>
-</body>
-</html>
+<footer>AI CREATIVE BRIEF · 매주 월·목 자동 발행<br>GitHub Actions + OpenAI<br><span style="font-size:.6rem;opacity:.5">Generated 2026-03-23</span></footer>
+</body></html>
