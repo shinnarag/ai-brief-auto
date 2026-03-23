@@ -22,7 +22,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install anthropic tavily-python
+        run: pip install anthropic openai
 
       - name: Generate AI Brief
         env:
