@@ -48,6 +48,7 @@ def openai_search(query):
     try:
         resp = openai_client.chat.completions.create(
             model="gpt-5.4",
+            reasoning_effort="high",
             tools=[{"type": "web_search_preview"}],
             messages=[{
                 "role": "user",
