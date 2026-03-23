@@ -1,247 +1,358 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>AI 크리에이티브 브리프 — 2026-03-23</title>
-<script>
-(function(){
-  var s = localStorage.getItem('theme');
-  if(s) document.documentElement.setAttribute('data-theme', s);
-})();
-function toggleTheme(){
-  var c = document.documentElement.getAttribute('data-theme');
-  var n = c === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', n);
-  localStorage.setItem('theme', n);
-  var i = document.getElementById('toggle-icon');
-  if(i) i.textContent = n === 'dark' ? '☀' : '☽';
-}
-</script>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&family=Noto+Serif+KR:wght@400;700&display=swap');
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#f8f9fc;--surface:#ffffff;--surface2:#f0f3f8;--border:#dde3ee;
-  --text:#0f1623;--text-sub:#374151;--muted:#6b7280;
-  --accent:#1d4ed8;--accent-light:#eff6ff;--accent2:#0ea5e9;
-  --video:#2563eb;--music:#7c3aed;--design:#059669;--content:#dc2626;--trending:#d97706;
-  --nav-bg:rgba(248,249,252,0.94);--imp-bg:#eff6ff;--imp-border:#1d4ed8;
-  --kw1:#0f1623;--kw2:#1e3a6e;--kw3:#2563eb;--kw4:#6b7280;--kw5:#9ca3af;
-}
-[data-theme="dark"]{
-  --bg:#080d16;--surface:#0f1623;--surface2:#161f30;--border:#1e2d45;
-  --text:#e8edf5;--text-sub:#b8c4d4;--muted:#5a7090;
-  --accent:#3b82f6;--accent-light:#0f1e35;--accent2:#38bdf8;
-  --video:#3b82f6;--music:#a78bfa;--design:#34d399;--content:#f87171;--trending:#fbbf24;
-  --nav-bg:rgba(8,13,22,0.94);--imp-bg:#0f1e35;--imp-border:#3b82f6;
-  --kw1:#e8edf5;--kw2:#93c5fd;--kw3:#3b82f6;--kw4:#5a7090;--kw5:#374151;
-}
-html{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:15px;line-height:1.75;transition:background .25s,color .25s}
-a{color:inherit;text-decoration:none}
-::selection{background:var(--accent);color:#fff}
-nav{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:.85rem 2rem;background:var(--nav-bg);backdrop-filter:blur(14px);border-bottom:1.5px solid var(--border);transition:background .25s,border-color .25s}
-.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.45rem;letter-spacing:.14em;color:var(--accent)}
-.nav-right{display:flex;align-items:center;gap:1.6rem}
-.nav-links{display:flex;gap:1.4rem;font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
-.nav-links a:hover{color:var(--text)}
-.theme-toggle{display:flex;align-items:center;gap:.5rem;font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.06em;color:var(--muted);cursor:pointer;border:none;background:none;padding:0}
-.toggle-track{width:36px;height:20px;background:var(--border);border-radius:10px;position:relative;transition:background .25s;border:1.5px solid var(--border)}
-[data-theme="dark"] .toggle-track{background:var(--accent)}
-.toggle-thumb{position:absolute;top:2px;left:2px;width:14px;height:14px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
-[data-theme="dark"] .toggle-thumb{transform:translateX(16px)}
-.hero{padding:5rem 2rem 3.5rem;border-bottom:1.5px solid var(--border);max-width:1100px;margin:0 auto}
-.hero-eyebrow{font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:1.1rem}
-.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.8rem,10vw,7.5rem);letter-spacing:.04em;line-height:.92;color:var(--text)}
-.hero-title span{color:var(--accent)}
-.hero-meta{display:flex;flex-wrap:wrap;gap:1.4rem;margin-top:1.8rem;font-family:'Space Mono',monospace;font-size:.7rem;color:var(--muted);letter-spacing:.05em;font-weight:700}
-.hero-meta span::before{content:'— ';opacity:.4}
-.container{max-width:1100px;margin:0 auto;padding:0 2rem}
-.section{margin-top:3rem}
-.section-head{display:flex;align-items:center;gap:1rem;padding:.6rem 0;border-top:2px solid var(--text);margin-bottom:1.4rem}
-.section-num{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);letter-spacing:.14em;font-weight:700}
-.section-tag{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .7rem;border-radius:3px;color:#fff;font-weight:700}
-.t-video{background:var(--video)}.t-music{background:var(--music)}.t-design{background:var(--design)}.t-content{background:var(--content)}.t-trending{background:var(--trending)}
-.section-title{font-family:'Noto Serif KR',serif;font-size:1.2rem;font-weight:700;color:var(--text)}
-.item{background:var(--surface);border:1.5px solid var(--border);border-left:4px solid var(--border);border-radius:6px;padding:1.4rem 1.6rem;margin-bottom:1rem;transition:border-color .2s,box-shadow .2s}
-.item:hover{border-left-color:var(--accent);box-shadow:0 4px 20px rgba(29,78,216,.08)}
-[data-theme="dark"] .item:hover{box-shadow:0 4px 20px rgba(59,130,246,.12)}
-.item-meta{display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:center;margin-bottom:.65rem}
-.item-title{font-family:'Noto Serif KR',serif;font-size:1.05rem;font-weight:700;line-height:1.45;color:var(--text)}
-.item-date{font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;color:var(--muted);background:var(--surface2);border:1.5px solid var(--border);padding:.13rem .45rem;border-radius:3px}
-.item-source{font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:.06em}
-.item-platform{font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;color:var(--trending);text-transform:uppercase;letter-spacing:.06em;background:rgba(217,119,6,.1);padding:.13rem .45rem;border-radius:3px}
-[data-theme="dark"] .item-platform{background:rgba(251,191,36,.1)}
-.item-summary{font-size:.92rem;line-height:1.85;color:var(--text-sub);font-weight:400;margin:.65rem 0}
-.item-imp{border-left:4px solid var(--imp-border);padding:.65rem 1.1rem;margin:.8rem 0 .5rem;background:var(--imp-bg);border-radius:0 4px 4px 0;font-size:.88rem;line-height:1.75;color:var(--text-sub);font-weight:500}
-.item-imp strong{display:block;margin-bottom:.25rem;font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700}
-.item-link{display:inline-flex;align-items:center;gap:.3rem;margin-top:.5rem;font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;color:var(--accent);border-bottom:1.5px solid transparent;transition:border-color .15s;word-break:break-all}
-.item-link:hover{border-bottom-color:var(--accent)}
-.empty{color:var(--muted);font-size:.82rem;font-weight:700;padding:1.4rem;border:1.5px dashed var(--border);text-align:center;border-radius:6px;font-family:'Space Mono',monospace;letter-spacing:.06em}
-.kw-cloud{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem 1.4rem;padding:2rem 0}
-.kw{font-family:'Bebas Neue',sans-serif;letter-spacing:.06em;transition:opacity .2s;cursor:default}
-.kw:hover{opacity:.7}
-.kw-1{font-size:2.6rem;color:var(--kw1)}.kw-2{font-size:1.9rem;color:var(--kw2)}.kw-3{font-size:1.4rem;color:var(--kw3)}.kw-4{font-size:1.08rem;color:var(--kw4)}.kw-5{font-size:.88rem;color:var(--kw5)}
-.archive-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5px;background:var(--border);border:1.5px solid var(--border);border-radius:8px;overflow:hidden}
-.archive-card{background:var(--surface);padding:1.8rem;transition:background .15s}
-.archive-card:hover{background:var(--surface2)}
-.ac-date{font-family:'Space Mono',monospace;font-size:.64rem;font-weight:700;color:var(--accent);letter-spacing:.1em;margin-bottom:.55rem}
-.ac-title{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:.06em;color:var(--text);margin-bottom:.85rem;line-height:1.1}
-.ac-kws{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1.1rem}
-.ac-kw{font-family:'Space Mono',monospace;font-size:.6rem;font-weight:700;color:var(--muted);border:1.5px solid var(--border);padding:.12rem .45rem;border-radius:3px}
-.ac-link{font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;color:var(--accent);border-bottom:1.5px solid var(--accent);display:inline-block}
-hr.div{border:none;border-top:1.5px solid var(--border);margin:2.8rem 0 0}
-footer{text-align:center;padding:3rem 1rem;border-top:1.5px solid var(--border);margin-top:4rem;font-family:'Space Mono',monospace;font-size:.64rem;font-weight:700;color:var(--muted);letter-spacing:.08em;line-height:2.4}
-@media(max-width:600px){.hero{padding:3rem 1rem 2rem}.container{padding:0 1rem}.hero-meta{gap:.8rem}nav{padding:.8rem 1rem}}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Creative Daily Brief | 2026-03-23</title>
+  <meta name="description" content="AI 영상·음악·디자인·콘텐츠/마케팅 이슈 요약" />
+  <style>
+    :root{
+      --bg:#0b1020;
+      --panel:#121936;
+      --panel-2:#0f1530;
+      --card:#ffffff;
+      --text:#0f172a;
+      --muted:#475569;
+      --line:#dbe3f0;
+      --brand:#5b8cff;
+      --brand-2:#8ec5ff;
+      --ink:#e8eefc;
+      --success:#0f766e;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",Arial,sans-serif;
+      background: linear-gradient(180deg, var(--bg) 0%, #111a35 100%);
+      color: var(--ink);
+      line-height:1.7;
+    }
+    a{color:#1d4ed8;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:1080px;margin:0 auto;padding:40px 20px 80px}
+    .hero{
+      background: linear-gradient(135deg, rgba(91,140,255,.18), rgba(142,197,255,.08));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:24px;
+      padding:32px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.22);
+      backdrop-filter: blur(12px);
+    }
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 12px;
+      border-radius:999px;
+      background: rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.1);
+      font-size:12px;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+    }
+    h1{
+      margin:14px 0 10px;
+      font-size:40px;
+      line-height:1.15;
+      letter-spacing:-.02em;
+    }
+    .hero p{
+      margin:8px 0 0;
+      color:#d8e3ff;
+      max-width:860px;
+    }
+    .meta-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px;
+      margin-top:24px;
+    }
+    .meta-card{
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:18px;
+      padding:14px 16px;
+    }
+    .meta-label{font-size:12px;color:#bfd0ff}
+    .meta-value{font-size:15px;font-weight:700;margin-top:4px}
+    .section{
+      margin-top:28px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:24px;
+      padding:24px;
+      box-shadow: 0 14px 40px rgba(0,0,0,.14);
+    }
+    .section h2{
+      margin:0 0 16px;
+      font-size:28px;
+      letter-spacing:-.02em;
+    }
+    .items{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:16px;
+    }
+    .card{
+      background: var(--card);
+      border-radius:20px;
+      padding:22px 22px 18px;
+      color: var(--text);
+      border:1px solid var(--line);
+      box-shadow: 0 12px 28px rgba(15,23,42,.08);
+    }
+    .card h3{
+      margin:0 0 10px;
+      font-size:22px;
+      line-height:1.3;
+      letter-spacing:-.02em;
+    }
+    .meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px 16px;
+      margin:0 0 12px;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .tag{
+      display:inline-block;
+      padding:4px 10px;
+      border-radius:999px;
+      background:#eef4ff;
+      color:#2453c5;
+      font-size:12px;
+      font-weight:700;
+      margin-bottom:10px;
+    }
+    .label{font-weight:700}
+    .summary, .implication{
+      margin:10px 0 0;
+      font-size:15px;
+      color:#1f2937;
+    }
+    .link{
+      margin-top:14px;
+      font-size:14px;
+      word-break:break-all;
+    }
+    .empty{
+      background:rgba(255,255,255,.07);
+      border:1px dashed rgba(255,255,255,.18);
+      border-radius:18px;
+      padding:18px;
+      color:#d8e3ff;
+    }
+    .signals{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:12px;
+      margin-top:16px;
+    }
+    .signal{
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:18px;
+      padding:16px;
+    }
+    .footer{
+      margin-top:28px;
+      color:#c8d5f8;
+      font-size:13px;
+      opacity:.9;
+    }
+    code{background:#eef2ff;padding:2px 6px;border-radius:6px}
+    @media (max-width: 860px){
+      .meta-grid, .signals{grid-template-columns:1fr}
+      h1{font-size:32px}
+      .section h2{font-size:24px}
+      .card h3{font-size:20px}
+    }
+  </style>
 </head>
 <body>
-<nav>
-  <span class="nav-logo">AI BRIEF</span>
-  <div class="nav-right">
-    <div class="nav-links"><a href="index.html">← 아카이브</a></div>
-    <button class="theme-toggle" onclick="toggleTheme()" aria-label="다크모드 전환">
-      <span class="toggle-track"><span class="toggle-thumb"></span></span>
-      <span id="toggle-icon">☽</span>
-    </button>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">AI Creative Daily Brief</div>
+      <h1>AI 영상 · 음악 · 디자인 · 콘텐츠/마케팅 이슈</h1>
+      <p>월요일 실행 기준 최근 4일(2026-03-19 ~ 2026-03-23, KST) 내 공개된 이슈만 선별했습니다. 중복 보도는 병합했고, 공식 발표·제품 업데이트·릴리즈 노트·도구/모델 업데이트·신뢰 가능한 매체를 우선 반영했습니다.</p>
+      <div class="meta-grid">
+        <div class="meta-card">
+          <div class="meta-label">수집 범위</div>
+          <div class="meta-value">2026-03-19 ~ 2026-03-23</div>
+        </div>
+        <div class="meta-card">
+          <div class="meta-label">우선순위</div>
+          <div class="meta-value">공식 발표 · 제품 업데이트 · 신뢰 매체</div>
+        </div>
+        <div class="meta-card">
+          <div class="meta-label">배포 형태</div>
+          <div class="meta-value">GitHub Pages용 단일 파일 (index.html)</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Video AI</h2>
+      <div class="items">
+
+        <article class="card">
+          <div class="tag">AI 도구/모델 업데이트</div>
+          <h3>OpenAI, Sora에 편집기(Editor) 도입</h3>
+          <div class="meta">
+            <span><span class="label">발행일:</span> 2026-03-19</span>
+            <span><span class="label">출처:</span> OpenAI Help</span>
+          </div>
+          <p class="summary"><span class="label">요약:</span> OpenAI는 Sora iOS·웹 버전에 새 편집기를 도입했습니다. 프레임 단위 트리밍, 다중 클립 스티칭, 타임라인 재정렬, 드래프트 가져오기, 클립 확장, 세그먼트 재프롬프트, 기존 클립 리믹스까지 한곳에서 처리할 수 있어 생성 이후 편집 반복 작업이 크게 쉬워졌습니다.</p>
+          <p class="implication"><span class="label">실무적 시사점:</span> 영상 생성 AI가 단순 생성기를 넘어 실제 편집 워크플로 안으로 들어오고 있어, 소셜 영상·뮤직 티저·광고 시안 제작 속도가 더 빨라질 가능성이 큽니다.</p>
+          <p class="link"><span class="label">참고 링크:</span> <a href="https://help.openai.com/en/articles/12593142-sora-release-notes" target="_blank" rel="noopener">https://help.openai.com/en/articles/12593142-sora-release-notes</a></p>
+        </article>
+
+        <article class="card">
+          <div class="tag">AI 도구/모델 업데이트</div>
+          <h3>Google Gemini API, /v1/videos 엔드포인트에 Veo 3.1 프리뷰 추가</h3>
+          <div class="meta">
+            <span><span class="label">발행일:</span> 2026-03-19</span>
+            <span><span class="label">출처:</span> Google AI for Developers</span>
+          </div>
+          <p class="summary"><span class="label">요약:</span> Google은 Gemini API 릴리즈 노트에서 OpenAI 호환 기능을 업데이트하며 <code>/v1/videos</code> 엔드포인트와 <code>veo-3.1-generate-preview</code> 모델 지원을 추가했습니다. 같은 항목에서 <code>gemini-3-pro-image-preview</code>도 함께 언급돼, 이미지와 비디오 생성 API 확장이 동시에 진행되고 있음을 보여줍니다.</p>
+          <p class="implication"><span class="label">실무적 시사점:</span> 비디오 생성이 독립 제품이 아니라 API 레이어로 더 쉽게 붙기 시작해, 마케팅 자동화·콘텐츠 제작 툴·내부 생성 파이프라인에서 영상 생성 통합이 빨라질 수 있습니다.</p>
+          <p class="link"><span class="label">참고 링크:</span> <a href="https://ai.google.dev/gemini-api/docs/changelog" target="_blank" rel="noopener">https://ai.google.dev/gemini-api/docs/changelog</a></p>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Music AI</h2>
+      <div class="items">
+
+        <article class="card">
+          <div class="tag">플랫폼 정책 / 탐지 기술</div>
+          <h3>Deezer, 완전 AI 생성 음악 추천 제외 확대… AI 탐지 전략 강화</h3>
+          <div class="meta">
+            <span><span class="label">발행일:</span> 2026-03-19</span>
+            <span><span class="label">출처:</span> Reuters</span>
+          </div>
+          <p class="summary"><span class="label">요약:</span> Reuters에 따르면 Deezer는 AI 탐지 기술 활용을 확대해, 이미 완전 AI 생성 음악을 추천에서 제외하는 방식을 더 강화하겠다고 밝혔습니다. 동시에 광고와 B2B 플랫폼 전략과 묶어 AI 탐지를 하나의 사업 축으로 키우려는 방향을 드러냈습니다.</p>
+          <p class="implication"><span class="label">실무적 시사점:</span> 음원 유통과 프로모션에서는 AI 생성 여부가 단순 논쟁을 넘어 추천 노출과 수익 구조에 직접 영향을 주는 운영 변수로 바뀌고 있습니다.</p>
+          <p class="link"><span class="label">참고 링크:</span> <a href="https://www.reuters.com/technology/deezer-reshapes-offering-businesses-boost-revenue-with-ads-ai-detection-2026-03-19/" target="_blank" rel="noopener">https://www.reuters.com/technology/deezer-reshapes-offering-businesses-boost-revenue-with-ads-ai-detection-2026-03-19/</a></p>
+        </article>
+
+        <article class="card">
+          <div class="tag">규제 / 사기 이슈</div>
+          <h3>미 법무부, AI 생성 곡과 봇을 활용한 스트리밍 사기 유죄 인정 발표</h3>
+          <div class="meta">
+            <span><span class="label">발행일:</span> 2026-03-19</span>
+            <span><span class="label">출처:</span> U.S. Department of Justice</span>
+          </div>
+          <p class="summary"><span class="label">요약:</span> 미 법무부 남부뉴욕지검은 Michael Smith가 수십만 개의 AI 생성 곡을 만들고 봇으로 수십억 회 스트리밍을 발생시켜 로열티를 편취한 사건에서 유죄를 인정했다고 발표했습니다. 생성형 AI가 음악 제작 비용을 낮춘 반면, 동시에 대규모 스트리밍 조작에도 활용될 수 있다는 점을 공식적으로 보여준 사례입니다.</p>
+          <p class="implication"><span class="label">실무적 시사점:</span> 유통사와 플랫폼은 AI 음악 자체보다도 비정상 스트리밍, 카탈로그 오염, 로열티 사기 탐지 체계를 함께 강화해야 합니다.</p>
+          <p class="link"><span class="label">참고 링크:</span> <a href="https://www.justice.gov/usao-sdny/pr/north-carolina-man-pleads-guilty-music-streaming-fraud-aided-artificial-intelligence-0" target="_blank" rel="noopener">https://www.justice.gov/usao-sdny/pr/north-carolina-man-pleads-guilty-music-streaming-fraud-aided-artificial-intelligence-0</a></p>
+        </article>
+
+        <article class="card">
+          <div class="tag">업계 대응</div>
+          <h3>Sony Music, 딥페이크 곡 13만 5천 개 이상 삭제… “라벨링이 다음 과제”</h3>
+          <div class="meta">
+            <span><span class="label">발행일:</span> 2026-03-20</span>
+            <span><span class="label">출처:</span> TechRadar</span>
+          </div>
+          <p class="summary"><span class="label">요약:</span> TechRadar는 Sony Music이 비욘세, 해리 스타일스, 퀸 등을 사칭한 AI 딥페이크 곡 13만 5천 개 이상을 주요 스트리밍 플랫폼에서 삭제했다고 전했습니다. 기사에서는 탐지 이후 조치만으로는 한계가 있어, 업로드 시점의 탐지와 명확한 AI 라벨링이 다음 핵심 과제로 지목됐습니다.</p>
+          <p class="implication"><span class="label">실무적 시사점:</span> AI 음악 이슈는 단순 저작권 논쟁을 넘어, 아티스트 캠페인 보호와 카탈로그 신뢰 관리 문제로 확장되고 있습니다.</p>
+          <p class="link"><span class="label">참고 링크:</span> <a href="https://www.techradar.com/audio/audio-streaming/sony-removes-a-staggering-135-000-deepfake-songs-from-music-streaming-services-but-labelling-ai-material-is-absolutely-the-next-critical-challenge" target="_blank" rel="noopener">https://www.techradar.com/audio/audio-streaming/sony-removes-a-staggering-135-000-deepfake-songs-from-music-streaming-services-but-labelling-ai-material-is-absolutely-the-next-critical-challenge</a></p>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Design AI</h2>
+      <div class="items">
+
+        <article class="card">
+          <div class="tag">AI 도구/모델 업데이트</div>
+          <h3>Adobe Firefly, 커스텀 모델 공개 베타와 30+ 모델 멀티모델 환경 확대</h3>
+          <div class="meta">
+            <span><span class="label">발행일:</span> 2026-03-19</span>
+            <span><span class="label">출처:</span> Adobe Blog</span>
+          </div>
+          <p class="summary"><span class="label">요약:</span> Adobe는 Firefly에서 사용자의 이미지로 학습하는 커스텀 모델을 공개 베타로 확대하고, Adobe·Google·OpenAI·Runway·Kling 등 30개 이상의 모델을 한 환경에서 쓸 수 있도록 확장했습니다. 발표문은 새로운 이미지·비디오 편집 기능과 함께 Firefly Image Model 5의 일반 공개도 강조했습니다.</p>
+          <p class="implication"><span class="label">실무적 시사점:</span> 디자인 팀은 단일 생성 모델보다, 브랜드 자산을 반영한 커스텀 스타일과 멀티모델 비교·후편집까지 포함하는 통합 제작 환경을 기준으로 툴을 평가해야 합니다.</p>
+          <p class="link"><span class="label">참고 링크:</span> <a href="https://blog.adobe.com/en/publish/2026/03/19/adobe-firefly-expands-video-image-creation-with-new-ai-capabilities-custom-models" target="_blank" rel="noopener">https://blog.adobe.com/en/publish/2026/03/19/adobe-firefly-expands-video-image-creation-with-new-ai-capabilities-custom-models</a></p>
+        </article>
+
+        <article class="card">
+          <div class="tag">AI 모델 업데이트</div>
+          <h3>Microsoft, 텍스트-이미지 모델 ‘MAI-Image-2’ 공개</h3>
+          <div class="meta">
+            <span><span class="label">발행일:</span> 2026-03-19</span>
+            <span><span class="label">출처:</span> Microsoft AI</span>
+          </div>
+          <p class="summary"><span class="label">요약:</span> Microsoft는 MAI-Image-2를 공개하며 포토리얼리즘, 자연스러운 피부톤, 그리고 인포그래픽·슬라이드·다이어그램에 중요한 이미지 내 텍스트 생성 성능을 강조했습니다. 이 모델은 Copilot과 Bing Image Creator에 순차 적용되고, WPP 같은 일부 고객에게 API가 먼저 제공된 뒤 Microsoft Foundry로 확대될 예정입니다.</p>
+          <p class="implication"><span class="label">실무적 시사점:</span> 마케팅·디자인 조직에서는 단순 이미지 생성보다 브랜드용 비주얼과 정확한 텍스트 포함 그래픽을 더 안정적으로 만드는 모델 경쟁이 본격화되고 있습니다.</p>
+          <p class="link"><span class="label">참고 링크:</span> <a href="https://microsoft.ai/news/introducing-mai-image-2/" target="_blank" rel="noopener">https://microsoft.ai/news/introducing-mai-image-2/</a></p>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>AI Content / Marketing Issues</h2>
+      <div class="items">
+
+        <article class="card">
+          <div class="tag">광고 수익화 구조 변화</div>
+          <h3>OpenAI, 미국 내 ChatGPT 무료·Go 사용자 전체로 광고 확대</h3>
+          <div class="meta">
+            <span><span class="label">발행일:</span> 2026-03-21</span>
+            <span><span class="label">출처:</span> Reuters</span>
+          </div>
+          <p class="summary"><span class="label">요약:</span> Reuters에 따르면 OpenAI는 미국 내 ChatGPT 무료·Go 사용자 전반으로 광고 노출을 확대할 예정입니다. Criteo가 광고 파일럿에 들어갔고, 광고주에게는 텍스트·비주얼 변형을 더 많이 제공할수록 노출과 성과가 개선될 수 있다는 운영 가이드도 공유됐습니다.</p>
+          <p class="implication"><span class="label">왜 지금 중요한가:</span> 생성형 AI 인터페이스가 곧 광고 매체가 되기 시작했다는 뜻이며, 검색광고·디스플레이 이후의 새로운 대화형 광고 포맷 경쟁이 본격화될 수 있습니다.</p>
+          <p class="link"><span class="label">참고 링크:</span> <a href="https://www.reuters.com/business/media-telecom/openai-expand-ads-chatgpt-all-free-low-cost-users-information-reports-2026-03-21/" target="_blank" rel="noopener">https://www.reuters.com/business/media-telecom/openai-expand-ads-chatgpt-all-free-low-cost-users-information-reports-2026-03-21/</a></p>
+        </article>
+
+        <article class="card">
+          <div class="tag">커머스 AI 업데이트</div>
+          <h3>Google, AI 쇼핑용 UCP 업데이트… 장바구니·카탈로그·ID 연동 강화</h3>
+          <div class="meta">
+            <span><span class="label">발행일:</span> 2026-03-19</span>
+            <span><span class="label">출처:</span> Google Blog</span>
+          </div>
+          <p class="summary"><span class="label">요약:</span> Google은 Universal Commerce Protocol(UCP)에 장바구니 동시 추가, 실시간 카탈로그 정보 조회, ID 연동, Merchant Center 온보딩 단순화 등 새 기능을 추가했습니다. 쇼핑 에이전트가 재고·가격·옵션을 더 정확하게 다루고, 리테일러는 더 쉽게 AI 쇼핑 생태계에 연결될 수 있도록 설계된 업데이트입니다.</p>
+          <p class="implication"><span class="label">왜 지금 중요한가:</span> 상품 검색과 구매 여정이 AI 에이전트와의 대화로 이동할수록, 브랜드는 광고뿐 아니라 카탈로그 구조와 재고 데이터 자체를 AI 친화적으로 정리해야 합니다.</p>
+          <p class="link"><span class="label">참고 링크:</span> <a href="https://blog.google/products-and-platforms/products/shopping/ucp-updates/" target="_blank" rel="noopener">https://blog.google/products-and-platforms/products/shopping/ucp-updates/</a></p>
+        </article>
+
+        <article class="card">
+          <div class="tag">브랜드/인플루언서 이슈</div>
+          <h3>AI 인플루언서 상업화 가속… 일부 브랜드는 “Real People Only”로 역차별화</h3>
+          <div class="meta">
+            <span><span class="label">발행일:</span> 2026-03-20</span>
+            <span><span class="label">출처:</span> Business Insider</span>
+          </div>
+          <p class="summary"><span class="label">요약:</span> Business Insider는 AI 인플루언서가 이미 실제 브랜드 파트너십과 매출을 만들고 있지만, 소비자들은 여전히 인간 크리에이터 쪽에 더 큰 신뢰를 두는 경향이 있다고 전했습니다. 동시에 Dove와 Aerie처럼 AI 미사용을 전면에 내세우는 브랜드도 등장해, AI 활용과 인간성 강조가 동시에 마케팅 전략이 되는 양상이 나타나고 있습니다.</p>
+          <p class="implication"><span class="label">왜 지금 중요한가:</span> 앞으로는 AI 인플루언서를 쓰는지 자체보다, 그것을 어떤 고지 방식과 브랜드 스토리로 정당화하느냐가 더 중요한 커뮤니케이션 과제가 됩니다.</p>
+          <p class="link"><span class="label">참고 링크:</span> <a href="https://www.businessinsider.com/ai-influencers-aitana-lopez-sienna-rose-human-content-creators-fight-back-2026-3" target="_blank" rel="noopener">https://www.businessinsider.com/ai-influencers-aitana-lopez-sienna-rose-human-content-creators-fight-back-2026-3</a></p>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Key Signals</h2>
+      <div class="signals">
+        <div class="signal">영상 AI는 생성 이후 편집까지 내장한 제품 단계로 진화하고 있습니다.</div>
+        <div class="signal">음악 AI의 핵심 이슈는 생성 품질보다 탐지, 사기, 라벨링, 권리 관리로 이동 중입니다.</div>
+        <div class="signal">디자인 AI는 멀티모델 환경과 브랜드 전용 커스텀 모델 경쟁으로 넘어가고 있습니다.</div>
+        <div class="signal">마케팅에서는 대화형 AI가 광고 매체와 쇼핑 인터페이스로 직접 편입되기 시작했습니다.</div>
+      </div>
+    </section>
+
+    <div class="footer">
+      HTML report ready. This file is prepared as <strong>index.html</strong> for GitHub Pages deployment.
+    </div>
   </div>
-</nav>
-<div class="hero">
-  <p class="hero-eyebrow">AI CREATIVE BRIEF · 월요일 EDITION</p>
-  <h1 class="hero-title">AI<br><span>크리에이티브</span><br>브리프</h1>
-  <div class="hero-meta">
-    <span>발행 2026-03-23</span>
-    <span>수집 2026-03-19 ~ 2026-03-23</span>
-    <span>월요일 판</span>
-  </div>
-</div>
-<div class="container">
-<div class="section">
-  <div class="section-head">
-    <span class="section-num">01 /</span>
-    <span class="section-tag t-video">VIDEO AI</span>
-    <span class="section-title">비디오 AI 모델</span>
-  </div>
-  <div class="item">
-  <div class="item-meta">
-    <span class="item-date">2026-03-16</span>
-    <span class="item-source">Build Fast With AI</span>
-  </div>
-  <div class="item-title">LTX 2.3 출시: 4K·50FPS 동기화 비디오+오디오 단일 패스 생성</div>
-  <p class="item-summary">Lightricks가 3월 첫째 주 220억 파라미터 Diffusion Transformer 모델 LTX 2.3을 공개했다. 단일 포워드 패스로 비디오와 오디오를 동시에 생성하며, 4K 해상도·50FPS·최대 20초 영상을 지원한다. 포트레이트 모드(1080x1920) 네이티브 지원과 8스텝 디노이징으로 빠른 렌더링이 가능하다.</p>
-  <div class="item-imp"><strong>실무 시사점</strong>광고·소셜 콘텐츠 제작팀은 LTX 2.3의 세로형 네이티브 출력을 활용해 별도 후처리 없이 릴스·쇼츠용 고품질 소재를 빠르게 생산할 수 있다. 오디오 동기화가 단일 패스로 처리되므로 VO 싱크 작업 공수도 절감된다.</div>
-  <a class="item-link" href="https://www.buildfastwithai.com/blogs/ai-models-march-2026-releases" target="_blank">→ 원문 링크</a>
-</div>
-</div>
-<hr class="div"><div class="section">
-  <div class="section-head">
-    <span class="section-num">02 /</span>
-    <span class="section-tag t-music">MUSIC AI</span>
-    <span class="section-title">뮤직 AI 모델</span>
-  </div>
-  <div class="item">
-  <div class="item-meta">
-    <span class="item-date">2026-03-21</span>
-    <span class="item-source">MusicMaker.im</span>
-  </div>
-  <div class="item-title">Suno V6 미출시 확인 — V5가 현재 최신, 플랫폼 개선에 집중</div>
-  <p class="item-summary">2026년 3월 기준 Suno 공식 문서는 V5를 최신 모델로 명시하고 있으며 V6 출시 페이지는 존재하지 않는다. 최근 업데이트는 모델 버전 업그레이드보다 Suno Studio 플랫폼 UX 개선에 초점이 맞춰져 있다. V6 관련 내용은 루머 단계로 확인된 사실이 없다.</p>
-  <div class="item-imp"><strong>실무 시사점</strong>AI 음악 제작 워크플로우를 V6 출시에 맞춰 대기할 필요는 없으며, 현재 V5 기반으로 프로덕션 파이프라인을 구축하는 것이 실용적이다.</div>
-  <a class="item-link" href="https://musicmaker.im/blog/detail/Suno-V6-Latest-Update-What-s-Confirmed-What-s-Rumored-2026-81c99537ca0d" target="_blank">→ 원문 링크</a>
-</div>
-</div>
-<hr class="div"><div class="section">
-  <div class="section-head">
-    <span class="section-num">03 /</span>
-    <span class="section-tag t-design">DESIGN AI</span>
-    <span class="section-title">디자인 AI 모델</span>
-  </div>
-  <div class="item">
-  <div class="item-meta">
-    <span class="item-date">2026-03-20</span>
-    <span class="item-source">Upskillist</span>
-  </div>
-  <div class="item-title">Canva Magic Studio, Magic Layers 기능 3월 출시 — 이미지 레이어 분리 자동화</div>
-  <p class="item-summary">Canva Magic Studio가 2026년 3월 Magic Layers 기능을 선보였다. 플랫 PNG·JPG 이미지를 8~15초 내에 텍스트·오브젝트·배경 레이어로 자동 분리해 편집 가능하게 만든다. Canva CPO 카메론 애덤스는 'AI는 창작을 가속해야 한다'고 기능 취지를 설명했다.</p>
-  <div class="item-imp"><strong>실무 시사점</strong>마케팅 팀은 최종 승인된 디자인 에셋을 다시 원본 파일 없이도 레이어 단위로 수정할 수 있어 캠페인 소재 리사이징·현지화 작업 속도가 크게 향상된다.</div>
-  <a class="item-link" href="https://www.upskillist.com/blog/best-ai-graphic-design-tools/" target="_blank">→ 원문 링크</a>
-</div>
-</div>
-<hr class="div"><div class="section">
-  <div class="section-head">
-    <span class="section-num">04 /</span>
-    <span class="section-tag t-content">AI CONTENT</span>
-    <span class="section-title">AI 콘텐츠·마케팅</span>
-  </div>
-  <div class="item">
-  <div class="item-meta">
-    <span class="item-date">2026-03-11</span>
-    <span class="item-source">Constitution Center</span>
-  </div>
-  <div class="item-title">미국 대법원, AI 저작물 저작권 주체 청구 기각 — Thaler v. Perlmutter 확정</div>
-  <p class="item-summary">미국 대법원이 2026년 3월 2일 Thaler v. Perlmutter 상고를 기각해 'AI는 저작권 저자가 될 수 없다'는 DC항소법원 판결을 확정했다. 미국 저작권청은 인간이 창작 주체인 작품만 보호한다는 원칙을 유지하게 됐다. 이로써 AI 단독 생성 콘텐츠는 미국 내 저작권 보호 대상에서 명확히 제외된다.</p>
-  <div class="item-imp"><strong>실무 시사점</strong>브랜드가 AI 생성 광고·비주얼을 독점 자산으로 보호받으려면 반드시 인간 크리에이티브 개입을 문서화해야 하며, AI 단독 생성물에 의존하는 크리에이티브 전략은 IP 리스크가 있다.</div>
-  <a class="item-link" href="https://constitutioncenter.org/blog/supreme-court-denies-artificial-intelligence-authorship-claim-for-artwork-copyright" target="_blank">→ 원문 링크</a>
-</div><div class="item">
-  <div class="item-meta">
-    <span class="item-date">2026-03-10</span>
-    <span class="item-source">European Parliament</span>
-  </div>
-  <div class="item-title">유럽의회, AI 생성 콘텐츠 저작권 규정 결의안 채택</div>
-  <p class="item-summary">유럽의회가 생성형 AI와 저작권에 관한 결의안을 채택했다. AI 생성 콘텐츠의 저작권 보호 자격에 대한 국제 규정 불일치가 규제 차익거래 위험을 낳는다고 경고하며 글로벌 프레임워크 수립을 촉구했다. 저작권 집행에 AI를 활용할 경우 표현의 자유를 침해하지 않도록 세이프가드를 요구했다.</p>
-  <div class="item-imp"><strong>실무 시사점</strong>유럽에서 캠페인을 집행하는 글로벌 브랜드는 AI 생성 소재에 대한 출처 표기와 라이선스 문서화를 강화해야 하며, 크로스보더 캠페인의 법무 검토 프로세스를 정비할 필요가 있다.</div>
-  <a class="item-link" href="https://www.europarl.europa.eu/doceo/document/TA-10-2026-0066_EN.html" target="_blank">→ 원문 링크</a>
-</div><div class="item">
-  <div class="item-meta">
-    <span class="item-date">2026-03-04</span>
-    <span class="item-source">Digital Applied</span>
-  </div>
-  <div class="item-title">FTC AI 정책 3월 11일 시행 — 소셜 AI 콘텐츠 공시 의무 확대</div>
-  <p class="item-summary">FTC가 3월 11일을 기점으로 인플루언서·브랜드의 소셜 콘텐츠에 AI 생성·보조 사실을 공시하도록 기존 인플루언서 가이드라인을 확장 적용했다. 기업은 AI 활용 콘텐츠를 3단계로 분류하는 감사 추적 체계를 구축하도록 권고받고 있다. 소급 조사 가능성도 시사돼 선제 대응이 필요하다.</p>
-  <div class="item-imp"><strong>실무 시사점</strong>소셜 마케팅 팀은 AI 생성·보조 콘텐츠를 분류·태깅하는 내부 워크플로우를 즉시 수립하고, 인플루언서 계약서에 AI 활용 공시 조항을 명시해야 한다.</div>
-  <a class="item-link" href="https://www.digitalapplied.com/blog/ftc-ai-policy-deadline-march-11-compliance-readiness" target="_blank">→ 원문 링크</a>
-</div>
-</div>
-<hr class="div"><div class="section">
-  <div class="section-head">
-    <span class="section-num">05 /</span>
-    <span class="section-tag t-trending">TRENDING</span>
-    <span class="section-title">급상승 콘텐츠</span>
-  </div>
-  <div class="item">
-  <div class="item-meta">
-    <span class="item-date">2026-03-16</span>
-    <span class="item-platform">TikTok</span>
-  </div>
-  <div class="item-title">TikTok 3월 '봄 전환' 트렌드 — 계절 글로우업·로맨틱 라이프 포맷 급상승</div>
-  <p class="item-summary">3월 TikTok에서는 겨울→봄 전환 콘셉트의 GRWM·룸 메이크오버·목표 점검 콘텐츠가 급증하고 있다. Harry Styles의 'Aperture' 등 유포릭 오디오를 배경으로 한 '내 삶을 낭만화하기' 몽타주 포맷이 특히 높은 리텐션을 기록 중이다. 계절 전환 포맷은 패션·뷰티·푸드·홈 등 전 버티컬에서 적용 가능하다.</p>
-  <div class="item-imp"><strong>트렌드 인사이트</strong>브랜드는 봄 시즌 신제품·캠페인을 '비포&애프터 전환' 스토리텔링과 유포릭 트렌드 오디오로 포장하면 알고리즘 리텐션과 공감 모두를 확보할 수 있다.</div>
-  <a class="item-link" href="https://newengen.com/insights/march-2026-tiktok-trends/" target="_blank">→ 원문 링크</a>
-</div><div class="item">
-  <div class="item-meta">
-    <span class="item-date">2026-03-19</span>
-    <span class="item-platform">YouTube</span>
-  </div>
-  <div class="item-title">YouTube 60분 이상 장편 콘텐츠 바이럴 현상 — 롱폼 전략 재조명</div>
-  <p class="item-summary">YouTube에서 3시간짜리 나이지리아 영화가 업로드 후 2,000만 뷰를 돌파하는 등 60분 이상 장편 영상의 바이럴 사례가 증가하고 있다. 플랫폼이 넷플릭스·훌루와 경쟁하며 롱폼 콘텐츠 노출을 강화하는 정책 변화가 배경으로 분석된다. 크리에이터들은 단순 바이럴 대신 지속 가능한 롱폼+숏폼 혼합 전략을 구축하라는 신호로 읽히고 있다.</p>
-  <div class="item-imp"><strong>트렌드 인사이트</strong>브랜드 콘텐츠 팀은 단일 롱폼 영상을 제작한 뒤 숏클립으로 분할하는 '원소스 멀티유즈' 파이프라인을 구성하면 YouTube 알고리즘 혜택과 숏폼 배포를 동시에 극대화할 수 있다.</div>
-  <a class="item-link" href="https://digiday.com/media/the-rundown-what-youtube-creators-should-expect-to-change-in-2026/" target="_blank">→ 원문 링크</a>
-</div><div class="item">
-  <div class="item-meta">
-    <span class="item-date">2026-03-19</span>
-    <span class="item-platform">Instagram</span>
-  </div>
-  <div class="item-title">Instagram Reels 알고리즘 토픽 설정 기능 — 크리에이터 노출 제어 확대</div>
-  <p class="item-summary">Instagram이 Reels 알고리즘에서 사용자가 원하는 토픽을 직접 지정할 수 있는 기능을 공개했다. 이를 통해 크리에이터는 자신의 콘텐츠가 특정 관심사 피드에 우선 노출되도록 신호를 줄 수 있게 됐다. 마케터 계정도 동일한 방식으로 타겟 오디언스 피드 진입 가능성을 높일 수 있다.</p>
-  <div class="item-imp"><strong>트렌드 인사이트</strong>브랜드 계정은 게시물마다 적합한 토픽 카테고리를 선택하는 것이 해시태그보다 실질적인 도달 전략이 될 수 있으므로, 콘텐츠 캘린더에 토픽 태깅 프로세스를 추가해야 한다.</div>
-  <a class="item-link" href="https://www.instagram.com/reel/DTsY3BgDkH4/" target="_blank">→ 원문 링크</a>
-</div>
-</div>
-<hr class="div">
-</div>
-<footer>
-  AI CREATIVE BRIEF · 자동 생성 by GitHub Actions + Claude API<br>
-  2026-03-23 · 원문 링크를 반드시 교차 확인하세요
-</footer>
 </body>
 </html>
