@@ -23,34 +23,26 @@ print(f"[INFO] {edition} 판 | 수집: {since_date} ~ {today_str}")
 month_str = today.strftime("%B %Y")
 date_str  = today.strftime("%Y %m %d")
 
-# ── 검색 쿼리: 모델 업데이트 + 급상승 콘텐츠 중심 ────────
-QUERIES = {
-    # 영상 생성 모델 릴리즈/업데이트에 집중
+SEARCH_QUERIES = {
     "video": [
-        f"video AI model launch release {month_str} Sora Runway Kling Pika Veo",
-        f"text to video AI model update new version {month_str}",
+        f"video AI model update release announcement {month_str}",
+        f"AI video generation new tool launch {month_str}",
     ],
-    # 음악 생성 모델 릴리즈/업데이트
     "music": [
-        f"AI music generation model release update {month_str} Suno Udio",
-        f"music AI tool new version launch {month_str}",
+        f"music AI model update release announcement {month_str}",
+        f"AI music generation new tool launch {month_str}",
     ],
-    # 디자인/이미지 모델 릴리즈/업데이트
     "design": [
-        f"AI image design model release update {month_str} Midjourney Firefly DALL-E Stable Diffusion",
-        f"design AI tool new feature launch {month_str} Adobe Figma Canva",
+        f"image generation AI model update release {month_str}",
+        f"AI design tool new feature announcement {month_str}",
     ],
-    # AI 콘텐츠/마케팅 이슈
     "content": [
         f"AI content marketing brand strategy {month_str}",
-        f"AI generated content copyright brand safety regulation {month_str}",
+        f"AI generated content copyright regulation platform policy {month_str}",
     ],
-    # 급상승 콘텐츠 트렌드 — 플랫폼별
     "trending": [
-        f"YouTube trending viral content creators {month_str}",
-        f"Instagram Threads trending viral content {month_str}",
-        f"viral social media content trend {date_str}",
-        f"trending short form video content {month_str}",
+        f"YouTube Instagram Threads TikTok trending viral content this week",
+        f"viral social media content trend short form video {month_str}",
     ],
 }
 
