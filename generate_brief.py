@@ -22,24 +22,30 @@ month_str = today.strftime("%B %Y")
 
 SEARCH_QUERIES = {
     "video": [
-        f"video AI model update release announcement {month_str}",
-        f"AI video generation new tool launch {month_str}",
+        f"AI video generation model update release announcement {month_str}",
+        f"text to video AI new tool launch feature {month_str}",
+        f"AI video editing generation startup funding product launch {month_str}",
     ],
     "music": [
-        f"music AI model update release announcement {month_str}",
-        f"AI music generation new tool launch {month_str}",
+        f"AI music generation model update release announcement {month_str}",
+        f"AI music composition tool new feature launch {month_str}",
+        f"AI audio generation startup product launch {month_str}",
     ],
     "design": [
-        f"image generation AI model update release {month_str}",
-        f"AI design tool new feature announcement {month_str}",
+        f"AI image generation model update release {month_str}",
+        f"AI design tool new feature announcement launch {month_str}",
+        f"generative AI art illustration graphic design tool update {month_str}",
     ],
     "content": [
-        f"AI content marketing brand strategy {month_str}",
+        f"AI content marketing brand strategy case study {month_str}",
         f"AI generated content copyright regulation platform policy {month_str}",
+        f"brand AI campaign automation personalization {month_str}",
+        f"AI influencer marketing social media content creation tool {month_str}",
     ],
     "trending": [
-        f"YouTube Instagram Threads TikTok trending viral content this week",
-        f"viral social media content trend short form video {month_str}",
+        f"YouTube Instagram TikTok trending viral content this week {month_str}",
+        f"viral social media content trend short form video meme {month_str}",
+        f"trending challenge hashtag viral clip this week",
     ],
 }
 
@@ -54,6 +60,9 @@ def search(query):
                 "content": (
                     f"Search for the latest news about: {query}\n"
                     f"Only include results published after {since_date}.\n"
+                    f"IMPORTANT: Do NOT include Wikipedia pages. Only use news articles, "
+                    f"official blogs, product pages, and tech media (e.g. TechCrunch, The Verge, "
+                    f"VentureBeat, official company blogs, product announcement pages).\n"
                     f"Return a JSON array (max 6 items), each with: "
                     f"title, url, date (YYYY-MM-DD), source, summary (2-3 sentences in Korean).\n"
                     f"Pure JSON array only, no markdown."
@@ -104,14 +113,19 @@ JSON 스키마:
   "signals": ["string","string","string","string"]
 }}
 
+중요 규칙:
+- Wikipedia URL을 가진 항목은 반드시 제외하라. source에 "Wikipedia", "위키백과"가 있으면 해당 항목 삭제.
+- url 필드에는 실제 뉴스 기사, 공식 블로그, 제품 페이지의 URL만 사용하라.
+- source 필드에는 실제 뉴스 매체명 또는 공식 사이트명만 기재하라 (예: TechCrunch, The Verge, 공식 블로그 등).
+
 섹션별 기준:
-- video/music/design: 모델 출시·업데이트·신기능만 포함. 리서치·통계·전망 기사 제외. 없으면 []
-- content: 마케팅 실무자 관련 AI 이슈. badge는 이슈 성격. implication 레이블 "왜 지금 중요한가"
-- trending: 플랫폼별 급상승 콘텐츠. platform 필드 필수. implication 레이블 "트렌드 인사이트"
+- video/music/design: 모델 출시·업데이트·신기능만 포함. 리서치·통계·전망 기사 제외. 검색 결과에 관련 내용이 있으면 반드시 포함.
+- content: 마케팅 실무자 관련 AI 이슈(캠페인·자동화·규제·저작권 등). badge는 이슈 성격. implication 레이블 "왜 지금 중요한가". 검색 결과에서 관련 내용을 적극 발굴할 것.
+- trending: 플랫폼별 급상승 콘텐츠·바이럴·밈·챌린지. platform 필드 필수. implication 레이블 "트렌드 인사이트". 검색 결과에서 관련 내용을 적극 발굴할 것.
 - signals: 이번 호 전체 핵심 시그널 3~4개
 
 공통: title 한국어, summary 2~3문장 구체적 수치·모델명 포함, badge로 이슈 성격 분류
-keywords 5개. 각 섹션 0~5개.
+keywords 5개. 각 섹션 1~5개 (데이터가 있으면 최소 1개 이상 채울 것).
 
 검색결과:
 {json.dumps(search_data, ensure_ascii=False)}
@@ -215,8 +229,9 @@ nav{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between
 .signals-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin-top:.5rem}
 .signal-card{background:var(--surface);border:1.5px solid var(--border);border-left:4px solid var(--signal);border-radius:6px;padding:1.1rem 1.3rem;font-size:.9rem;line-height:1.75;color:var(--text-sub);font-weight:500}
 .archive-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5px;background:var(--border);border:1.5px solid var(--border);border-radius:8px;overflow:hidden}
-.archive-card{background:var(--surface);padding:1.8rem;transition:background .15s}
-.archive-card:hover{background:var(--surface2)}
+.archive-card{display:block;background:var(--surface);padding:1.8rem;transition:background .15s,box-shadow .2s;cursor:pointer;text-decoration:none;color:inherit}
+.archive-card:hover{background:var(--surface2);box-shadow:0 4px 20px rgba(29,78,216,.08)}
+[data-theme="dark"] .archive-card:hover{box-shadow:0 4px 20px rgba(59,130,246,.12)}
 .ac-date{font-family:'Space Mono',monospace;font-size:.64rem;font-weight:700;color:var(--accent);letter-spacing:.1em;margin-bottom:.55rem}
 .ac-title{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:.06em;color:var(--text);margin-bottom:.85rem;line-height:1.1}
 .ac-kws{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1.1rem}
@@ -343,7 +358,7 @@ def index_html(briefs):
     cards=""
     for b in briefs:
         kws_h="".join(f'<span class="ac-kw">{k["word"]}</span>' for k in b.get("keywords",[]))
-        cards+=f'<div class="archive-card"><div class="ac-date">{b["date"]} · {b["edition"]} 판</div><div class="ac-title">AI 크리에이티브<br>브리프</div><div class="ac-kws">{kws_h}</div><a class="ac-link" href="{b["filename"]}">브리프 보기 →</a></div>'
+        cards+=f'<a class="archive-card" href="{b["filename"]}"><div class="ac-date">{b["date"]} · {b["edition"]} 판</div><div class="ac-title">AI 크리에이티브<br>브리프</div><div class="ac-kws">{kws_h}</div></a>'
     return f"""<!DOCTYPE html>
 <html lang="ko">
 <head>
